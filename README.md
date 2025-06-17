@@ -78,8 +78,25 @@ The site is fully responsive with breakpoints for:
 
 ## 🚀 Deployment
 
+### Automatic VPS Deployment
+
+This project includes GitHub Actions for automatic deployment to a VPS:
+
+- **Automatic builds** on every push to `main`
+- **Quality checks** with ESLint before deployment
+- **Zero-downtime deployment** with automatic backups
+- **Web server reload** after successful deployment
+
+**Setup Instructions:**
+1. See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete VPS setup guide
+2. Add required GitHub Secrets (VPS_HOST, VPS_USERNAME, VPS_SSH_KEY, VPS_PORT)
+3. Push to `main` branch to trigger automatic deployment
+
+### Alternative Hosting
+
 Built files are generated in the `dist/` directory and can be deployed to any static hosting service:
 
+- **VPS** (recommended) - Full control with automatic deployment
 - Vercel
 - Netlify
 - GitHub Pages
