@@ -163,7 +163,7 @@ const App = () => {
       type: 'Founder',
       color: 'from-amber-600 to-orange-600',
       icon: Sparkles,
-      logo: 'https://www.sudosquad.com/favicon.ico',
+      logo: '/sudosquad_logo.png',
       description: 'AI Engineering consulting company focused on helping organizations implement cutting-edge AI solutions.',
       achievements: [
         'Founded AI Engineering consulting company specializing in enterprise AI implementation',
@@ -612,7 +612,14 @@ const App = () => {
             
             <a href="https://www.sudosquad.com/" className="group">
               <GlassCard className="flex items-center gap-4 hover:scale-105 transition-all duration-300 text-left">
-                <ExternalLink className="w-8 h-8 text-blue-400 group-hover:rotate-12 transition-transform" />
+                <div className="relative">
+                  <img 
+                    src="/sudosquad_logo.png" 
+                    alt="Sudo Squad logo"
+                    className="w-8 h-8 rounded-lg group-hover:scale-110 transition-transform"
+                  />
+                  <ExternalLink className="w-4 h-4 text-blue-400 absolute -top-1 -right-1 opacity-70" />
+                </div>
                 <div>
                   <p className="font-semibold">Consulting</p>
                   <p className="text-gray-300 text-sm">Sudo Squad LLC</p>
