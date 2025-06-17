@@ -19,7 +19,7 @@ const App = () => {
     {
       title: 'AI/ML & LLM Engineering',
       icon: Brain,
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-yellow-500 to-amber-500',
       skills: [
         'OpenAI GPT Models', 'Anthropic Claude', 'Google Gemini', 'LLM Applications',
         'MCP Servers', 'AI Code Editors (Cursor, Windsurf)', 'Extensions (Cline, Roo)',
@@ -29,7 +29,7 @@ const App = () => {
     {
       title: 'Programming & Development',
       icon: Code,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-amber-500 to-orange-500',
       skills: [
         'Python', 'Java', 'SQL', 'JavaScript', 'Bash', '4D',
         'Django', 'REST APIs', 'SOAP Web Services', 'ETL Pipelines'
@@ -38,7 +38,7 @@ const App = () => {
     {
       title: 'Cloud & Infrastructure',
       icon: Cloud,
-      color: 'from-green-500 to-emerald-500',
+      color: 'from-orange-500 to-red-500',
       skills: [
         'AWS (S3, Glue, Lambda, Kinesis)', 'Google Cloud (GCS, PubSub)', 'Terraform',
         'Kubernetes', 'Docker', 'High Availability Systems', 'SLA Management'
@@ -47,7 +47,7 @@ const App = () => {
     {
       title: 'Data Technologies',
       icon: Database,
-      color: 'from-orange-500 to-red-500',
+      color: 'from-yellow-600 to-amber-600',
       skills: [
         'Hadoop', 'MapReduce', 'Spark', 'Kafka', 'Snowflake', 'BigQuery',
         'Elasticsearch', 'Redis', 'Prefect', 'DBT', 'Hive', 'Pentaho'
@@ -56,7 +56,7 @@ const App = () => {
     {
       title: 'Monitoring & Analytics',
       icon: TrendingUp,
-      color: 'from-indigo-500 to-purple-500',
+      color: 'from-amber-600 to-orange-600',
       skills: [
         'Datadog', 'InfluxDB', 'Zenoss', 'Real-time Analytics',
         'Performance Tuning', 'Observability Engineering', 'Data Visualization'
@@ -65,7 +65,7 @@ const App = () => {
     {
       title: 'Leadership & Strategy',
       icon: Users,
-      color: 'from-teal-500 to-blue-500',
+      color: 'from-orange-600 to-red-600',
       skills: [
         'Team Leadership', 'Technical Strategy', 'Cross-functional Collaboration',
         'AI Education & Training', 'Enterprise Architecture', 'Product Ownership'
@@ -140,8 +140,9 @@ const App = () => {
       period: 'August 2024 - Present',
       location: 'Remote',
       type: 'Full-time',
-      color: 'from-blue-600 to-purple-600',
+      color: 'from-yellow-600 to-amber-600',
       icon: MonitorSpeaker,
+      logo: 'https://logos-world.net/wp-content/uploads/2020/11/PlayStation-Logo.png',
       description: 'Leading AI transformation across all PlayStation studios, architecting enterprise-scale AI infrastructure serving 1500+ users.',
       achievements: [
         'Lead AI enablement initiatives across all PlayStation studios as technical lead for enterprise AI infrastructure and strategy',
@@ -160,8 +161,9 @@ const App = () => {
       period: 'November 2024 - Present',
       location: 'Remote',
       type: 'Founder',
-      color: 'from-purple-600 to-pink-600',
+      color: 'from-amber-600 to-orange-600',
       icon: Sparkles,
+      logo: 'https://www.sudosquad.com/favicon.ico',
       description: 'AI Engineering consulting company focused on helping organizations implement cutting-edge AI solutions.',
       achievements: [
         'Founded AI Engineering consulting company specializing in enterprise AI implementation',
@@ -180,6 +182,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-orange-600 to-red-600',
       icon: Shield,
+      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
       description: 'Architected LLM-powered workflows and AI-driven game development tools for Destiny franchise operations.',
       achievements: [
         'Architected and implemented LLM-powered LiveOps support workflows and ETL pipelines for analytics engineering teams',
@@ -197,8 +200,9 @@ const App = () => {
       period: 'June 2018 - August 2023',
       location: 'Bellevue, WA',
       type: 'Management',
-      color: 'from-green-600 to-teal-600',
+      color: 'from-orange-600 to-yellow-700',
       icon: Building,
+      logo: 'https://media.licdn.com/dms/image/v2/C560BAQGHCwfXJv9O5Q/company-logo_200_200/company-logo_200_200/0/1631358959778?e=2147483647&v=beta&t=YV6-mhD4p7BzLYrvyXuYtb-OFR9DFcLOdMH1d8iA8JA',
       description: 'Established and managed Data Insights team, architecting game-agnostic cloud-based analytics systems.',
       achievements: [
         'Established and managed the Data Insights team from inception, defining vision, goals, and engagement models',
@@ -215,8 +219,9 @@ const App = () => {
       period: 'April 2016 - May 2018',
       location: 'Bellevue, WA',
       type: 'Full-time',
-      color: 'from-blue-600 to-indigo-600',
+      color: 'from-yellow-700 to-amber-700',
       icon: Target,
+      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
       description: 'Led data platform strategy and managed production infrastructure for Destiny franchise.',
       achievements: [
         'Led long-term roadmap and prioritization for Data Platforms Team supporting scalable data infrastructure for Destiny franchise',
@@ -235,6 +240,7 @@ const App = () => {
       type: 'Operations',
       color: 'from-yellow-600 to-orange-600',
       icon: Settings,
+      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
       description: 'Led 24/7 operations center monitoring all infrastructure supporting Destiny games.',
       achievements: [
         'Led 24/7 Destiny Operations Center monitoring all data center infrastructure supporting Destiny games',
@@ -251,8 +257,9 @@ const App = () => {
       period: 'May 2012 - August 2013',
       location: 'Seattle, WA',
       type: 'Full-time',
-      color: 'from-purple-600 to-blue-600',
+      color: 'from-amber-700 to-orange-700',
       icon: Database,
+      logo: 'https://www.lawlogix.com/wp-content/uploads/2016/04/lawlogix-logo.png',
       description: 'Engineered data migration solutions and enterprise integrations.',
       achievements: [
         'Engineered robust data migration solutions for transforming client data to LawLogix Guardian platform',
@@ -268,8 +275,9 @@ const App = () => {
       period: 'January 2011 - May 2012',
       location: 'Seattle, WA',
       type: 'Full-time',
-      color: 'from-teal-600 to-green-600',
+      color: 'from-orange-700 to-red-700',
       icon: Cloud,
+      logo: 'https://logos-world.net/wp-content/uploads/2020/09/Cognizant-Logo.png',
       description: 'Developed cloud infrastructure and monitoring systems for high-traffic analytical platforms.',
       achievements: [
         'Developed cloud infrastructure for high-traffic analytical business data using Hadoop, MapReduce, Hive, Pentaho, and AWS',
@@ -297,7 +305,7 @@ const App = () => {
           key={i}
           className="absolute w-64 h-64 rounded-full opacity-20 animate-pulse"
           style={{
-            background: `radial-gradient(circle, ${['#8B5CF6', '#06B6D4', '#10B981', '#F59E0B'][i % 4]}40 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${['#F59E0B', '#F97316', '#EAB308', '#FBBF24'][i % 4]}40 0%, transparent 70%)`,
             left: `${(i * 15) % 100}%`,
             top: `${(i * 20) % 100}%`,
             animationDelay: `${i * 0.5}s`,
@@ -309,7 +317,7 @@ const App = () => {
   );
 
   const GradientText = ({ children, className = "" }) => (
-    <span className={`bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent ${className}`}>
+    <span className={`bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-400 bg-clip-text text-transparent ${className}`}>
       {children}
     </span>
   );
@@ -327,7 +335,7 @@ const App = () => {
 
   const MouseTracker = () => (
     <div
-      className="fixed pointer-events-none z-10 w-6 h-6 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-60 blur-sm transition-all duration-75"
+      className="fixed pointer-events-none z-10 w-6 h-6 rounded-full bg-gradient-to-r from-yellow-400 to-amber-400 opacity-60 blur-sm transition-all duration-75"
       style={{
         left: mousePosition.x - 12,
         top: mousePosition.y - 12,
@@ -336,7 +344,7 @@ const App = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-amber-900 via-yellow-900 to-orange-900 text-white relative overflow-hidden">
       <FloatingOrbs />
       <MouseTracker />
       
@@ -353,7 +361,7 @@ const App = () => {
                   onClick={() => scrollToSection(item.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 group ${
                     activeSection === item.id
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg'
                       : 'hover:bg-white/20 text-gray-300 hover:text-white'
                   }`}
                 >
@@ -375,16 +383,29 @@ const App = () => {
             <div className="absolute -top-4 -left-4 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
             <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
             
-            <h1 className="text-7xl md:text-9xl font-black mb-6 relative">
-              <GradientText>Mike</GradientText>
-              <br />
-              <GradientText>Thompson</GradientText>
-            </h1>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+              <div className="relative">
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-yellow-400/30 shadow-2xl shadow-yellow-500/20">
+                  <img 
+                    src="/headshot.png" 
+                    alt="Mike Thompson"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400/20 to-amber-400/20 rounded-full blur-lg -z-10" />
+              </div>
+              
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black relative text-center md:text-left">
+                <GradientText>Mike</GradientText>
+                <br />
+                <GradientText>Thompson</GradientText>
+              </h1>
+            </div>
           </div>
           
           <div className="relative">
             <h2 className="text-2xl md:text-4xl font-light mb-8 text-gray-300">
-              Senior Staff <span className="text-purple-400">Machine Learning</span> Software Engineer
+              Senior Staff <span className="text-yellow-400">Machine Learning</span> Software Engineer
             </h2>
             
             <div className="max-w-4xl mx-auto mb-12">
@@ -399,7 +420,7 @@ const App = () => {
             </div>
             
             <div className="flex justify-center gap-6 mb-12 flex-wrap">
-              <a href="mailto:met600@gmail.com" className="group flex items-center gap-2 bg-purple-600/20 hover:bg-purple-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
+              <a href="mailto:met600@gmail.com" className="group flex items-center gap-2 bg-yellow-600/20 hover:bg-yellow-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
                 <Mail className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>Contact</span>
               </a>
@@ -419,7 +440,7 @@ const App = () => {
           </div>
           
           <div className="animate-bounce">
-            <ChevronDown className="w-8 h-8 mx-auto text-purple-400" />
+            <ChevronDown className="w-8 h-8 mx-auto text-yellow-400" />
           </div>
         </div>
       </section>
@@ -475,7 +496,17 @@ const App = () => {
                       </div>
                     </div>
                     <h3 className="text-2xl font-bold mb-2">{exp.title}</h3>
-                    <p className="text-purple-400 text-lg font-medium mb-2">{exp.company}</p>
+                    <div className="flex items-center gap-3 mb-2">
+                      {exp.logo && (
+                        <img 
+                          src={exp.logo} 
+                          alt={`${exp.company} logo`}
+                          className="w-8 h-8 rounded-lg object-contain bg-white/10 p-1"
+                          onError={(e) => { e.target.style.display = 'none' }}
+                        />
+                      )}
+                      <p className="text-yellow-400 text-lg font-medium">{exp.company}</p>
+                    </div>
                     <p className="text-gray-400 text-sm mb-2">{exp.location} • {exp.type}</p>
                     {exp.website && (
                       <a href={exp.website} className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1">
@@ -491,7 +522,7 @@ const App = () => {
                     </p>
                     
                     <div className="mb-6">
-                      <h4 className="text-lg font-semibold mb-3 text-purple-300">Key Achievements:</h4>
+                      <h4 className="text-lg font-semibold mb-3 text-yellow-300">Key Achievements:</h4>
                       <ul className="space-y-2">
                         {exp.achievements.map((achievement, i) => (
                           <li key={i} className="flex items-start gap-3 text-gray-300">
@@ -529,20 +560,20 @@ const App = () => {
           
           <GlassCard className="max-w-4xl mx-auto">
             <div className="flex items-center gap-4 mb-6">
-              <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl">
+              <div className="p-4 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-xl">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <div>
                 <h3 className="text-2xl font-bold">{education.degree}</h3>
-                <p className="text-purple-400 text-lg font-medium">{education.institution}</p>
+                <p className="text-yellow-400 text-lg font-medium">{education.institution}</p>
                 <p className="text-gray-400">{education.period}</p>
               </div>
             </div>
             
             <p className="text-gray-300 text-lg mb-4">{education.description}</p>
             
-            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg p-4 mb-6">
-              <h4 className="text-lg font-semibold mb-2 text-purple-300">Published Research:</h4>
+            <div className="bg-gradient-to-r from-yellow-600/20 to-amber-600/20 rounded-lg p-4 mb-6">
+              <h4 className="text-lg font-semibold mb-2 text-yellow-300">Published Research:</h4>
               <p className="text-gray-300">{education.publication}</p>
             </div>
             
@@ -571,7 +602,7 @@ const App = () => {
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <a href="mailto:met600@gmail.com" className="group">
               <GlassCard className="flex items-center gap-4 hover:scale-105 transition-all duration-300 text-left">
-                <Mail className="w-8 h-8 text-purple-400 group-hover:rotate-12 transition-transform" />
+                <Mail className="w-8 h-8 text-yellow-400 group-hover:rotate-12 transition-transform" />
                 <div>
                   <p className="font-semibold">Email</p>
                   <p className="text-gray-300 text-sm">met600@gmail.com</p>
