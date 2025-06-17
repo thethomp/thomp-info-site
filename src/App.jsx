@@ -100,7 +100,7 @@ const App = () => {
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
+          const { offsetTop } = element;
           if (scrollPosition >= offsetTop) {
             activeSection = section;
           }
