@@ -91,17 +91,32 @@ const App = () => {
       // Update active section based on scroll position
       const sections = ['hero', 'skills', 'experience', 'education', 'contact'];
       const scrollPosition = window.scrollY + 200;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Find the section that contains the current scroll position
+      let activeSection = 'hero'; // default
       
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
+          if (scrollPosition >= offsetTop) {
+            activeSection = section;
           }
         }
       }
+      
+      // Special case: if we're very close to the bottom and contact section exists, show contact
+      const contactElement = document.getElementById('contact');
+      if (contactElement && scrollPosition + windowHeight >= documentHeight - 50) {
+        const contactTop = contactElement.offsetTop;
+        if (scrollPosition >= contactTop - 300) {
+          activeSection = 'contact';
+        }
+      }
+      
+      setActiveSection(activeSection);
     };
     
     window.addEventListener('mousemove', handleMouseMove);
