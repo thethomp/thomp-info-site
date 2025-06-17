@@ -182,7 +182,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-orange-600 to-red-600',
       icon: Shield,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Architected LLM-powered workflows and AI-driven game development tools for Destiny franchise operations.',
       achievements: [
         'Architected and implemented LLM-powered LiveOps support workflows and ETL pipelines for analytics engineering teams',
@@ -202,7 +202,7 @@ const App = () => {
       type: 'Management',
       color: 'from-orange-600 to-yellow-700',
       icon: Building,
-      logo: 'https://media.licdn.com/dms/image/v2/C560BAQGHCwfXJv9O5Q/company-logo_200_200/company-logo_200_200/0/1631358959778?e=2147483647&v=beta&t=YV6-mhD4p7BzLYrvyXuYtb-OFR9DFcLOdMH1d8iA8JA',
+      logo: '/pm_logo.png',
       description: 'Established and managed Data Insights team, architecting game-agnostic cloud-based analytics systems.',
       achievements: [
         'Established and managed the Data Insights team from inception, defining vision, goals, and engagement models',
@@ -221,7 +221,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-yellow-700 to-amber-700',
       icon: Target,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Led data platform strategy and managed production infrastructure for Destiny franchise.',
       achievements: [
         'Led long-term roadmap and prioritization for Data Platforms Team supporting scalable data infrastructure for Destiny franchise',
@@ -240,7 +240,7 @@ const App = () => {
       type: 'Operations',
       color: 'from-yellow-600 to-orange-600',
       icon: Settings,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Led 24/7 operations center monitoring all infrastructure supporting Destiny games.',
       achievements: [
         'Led 24/7 Destiny Operations Center monitoring all data center infrastructure supporting Destiny games',
@@ -259,7 +259,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-amber-700 to-orange-700',
       icon: Database,
-      logo: 'https://www.lawlogix.com/wp-content/uploads/2016/04/lawlogix-logo.png',
+      logo: '/lawlogix_logo.png',
       description: 'Engineered data migration solutions and enterprise integrations.',
       achievements: [
         'Engineered robust data migration solutions for transforming client data to LawLogix Guardian platform',
@@ -277,7 +277,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-orange-700 to-red-700',
       icon: Cloud,
-      logo: 'https://logos-world.net/wp-content/uploads/2020/09/Cognizant-Logo.png',
+      logo: '/cognizant_logo.png',
       description: 'Developed cloud infrastructure and monitoring systems for high-traffic analytical platforms.',
       achievements: [
         'Developed cloud infrastructure for high-traffic analytical business data using Hadoop, MapReduce, Hive, Pentaho, and AWS',
