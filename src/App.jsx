@@ -428,7 +428,7 @@ const App = () => {
                 <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>GitHub</span>
               </a>
-              <a href="https://www.linkedin.com/in/michael-thompson-6a42532b/" className="group flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
+              <a href="https://www.linkedin.com/in/mike-thompson-6a42532b/" className="group flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
                 <Linkedin className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>LinkedIn</span>
               </a>
