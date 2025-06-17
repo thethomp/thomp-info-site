@@ -294,7 +294,7 @@ const App = () => {
     institution: 'University of Arizona Computer Vision Lab',
     period: '2007 - 2010',
     description: 'Developed dynamic string matching algorithms for presentation slide and speech recognition alignment.',
-    publication: 'Published research: "Improving and aligning speech with presentation slides," International Conference on Pattern Recognition 2010 (ICPR)',
+    publication: '"Improving and aligning speech with presentation slides," International Conference on Pattern Recognition 2010 (ICPR)',
     technologies: ['Computer Vision', 'String Matching Algorithms', 'Speech Recognition', 'Research Publication']
   };
 
