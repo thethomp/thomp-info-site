@@ -23,7 +23,7 @@ const App = () => {
       skills: [
         'OpenAI GPT Models', 'Anthropic Claude', 'Google Gemini', 'LLM Applications',
         'MCP Servers', 'AI Code Editors (Cursor, Windsurf)', 'Extensions (Cline, Roo)',
-        'Prompt Engineering', 'AI Workflow Automation', 'Enterprise AI Infrastructure'
+        'Prompt Engineering', 'Context Engineering', 'AI Workflow Automation', 'Enterprise AI Infrastructure'
       ]
     },
     {
@@ -31,8 +31,8 @@ const App = () => {
       icon: Code,
       color: 'from-amber-500 to-orange-500',
       skills: [
-        'Python', 'Java', 'SQL', 'JavaScript', 'Bash', '4D',
-        'Django', 'REST APIs', 'SOAP Web Services', 'ETL Pipelines'
+        'Python', 'Java', 'SQL', 'JavaScript', 'Bash',
+        'Django', 'REST APIs', 'ETL Pipelines'
       ]
     },
     {
@@ -45,12 +45,12 @@ const App = () => {
       ]
     },
     {
-      title: 'Data Technologies',
+      title: 'Data Engineering',
       icon: Database,
       color: 'from-yellow-600 to-amber-600',
       skills: [
         'Hadoop', 'MapReduce', 'Spark', 'Kafka', 'Snowflake', 'BigQuery',
-        'Elasticsearch', 'Redis', 'Prefect', 'DBT', 'Hive', 'Pentaho'
+        'Elasticsearch', 'Redis', 'Prefect', 'DBT', 'Hive', 'Apache Airflow', 'DynamoDB', 'Redshift'
       ]
     },
     {
@@ -58,8 +58,8 @@ const App = () => {
       icon: TrendingUp,
       color: 'from-amber-600 to-orange-600',
       skills: [
-        'Datadog', 'InfluxDB', 'Zenoss', 'Real-time Analytics',
-        'Performance Tuning', 'Observability Engineering', 'Data Visualization'
+        'Datadog', 'InfluxDB', 'Zenoss', 'Grafana', 'Grafana Cloud', 'Vector',
+        'Real-time Analytics', 'Performance Tuning', 'Observability Engineering', 'Data Visualization'
       ]
     },
     {
@@ -136,7 +136,7 @@ const App = () => {
   const experiences = [
     {
       title: 'Senior Staff Machine Learning Software Engineer',
-      company: 'PlayStation',
+      company: 'Sony Interactive Entertainment - PlayStation Studios',
       period: 'August 2024 - Present',
       location: 'Remote',
       type: 'Full-time',
@@ -195,7 +195,7 @@ const App = () => {
       technologies: ['LLM Workflows', 'ETL Pipelines', 'AI Automation', 'Game Development Tools', 'Player Support Systems', 'Private Model Endpoints']
     },
     {
-      title: 'Data Engineering Manager',
+      title: 'Data Architect & Data Engineering Manager',
       company: 'ProbablyMonsters',
       period: 'June 2018 - August 2023',
       location: 'Bellevue, WA',
