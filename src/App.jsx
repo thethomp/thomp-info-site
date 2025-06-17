@@ -414,7 +414,7 @@ const App = () => {
               </p>
               <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
                 Currently leading AI transformation at <span className="text-blue-400 font-semibold">PlayStation</span>, 
-                developing enterprise-scale AI infrastructure, and empowering <span className="text-green-400 font-semibold">1500+ users</span> 
+                developing enterprise-scale AI infrastructure, and empowering <span className="text-green-400 font-semibold">1500+ users</span>{' '}
                 across all studios with cutting-edge AI tooling and workflows.
               </p>
             </div>
