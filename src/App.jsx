@@ -175,7 +175,7 @@ const App = () => {
       website: 'https://www.sudosquad.com/'
     },
     {
-      title: 'Data Architect',
+      title: 'Data Engineering Architect',
       company: 'Bungie',
       period: 'August 2023 - August 2024',
       location: 'Bellevue, WA',
