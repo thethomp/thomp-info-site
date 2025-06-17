@@ -23,7 +23,7 @@ const App = () => {
       skills: [
         'OpenAI GPT Models', 'Anthropic Claude', 'Google Gemini', 'LLM Applications',
         'MCP Servers', 'AI Code Editors (Cursor, Windsurf)', 'Extensions (Cline, Roo)',
-        'Prompt Engineering', 'AI Workflow Automation', 'Enterprise AI Infrastructure'
+        'Prompt Engineering', 'Context Engineering', 'AI Workflow Automation', 'Enterprise AI Infrastructure'
       ]
     },
     {
@@ -31,8 +31,8 @@ const App = () => {
       icon: Code,
       color: 'from-amber-500 to-orange-500',
       skills: [
-        'Python', 'Java', 'SQL', 'JavaScript', 'Bash', '4D',
-        'Django', 'REST APIs', 'SOAP Web Services', 'ETL Pipelines'
+        'Python', 'Java', 'SQL', 'JavaScript', 'Bash',
+        'Django', 'REST APIs', 'ETL Pipelines'
       ]
     },
     {
@@ -45,12 +45,12 @@ const App = () => {
       ]
     },
     {
-      title: 'Data Technologies',
+      title: 'Data Engineering',
       icon: Database,
       color: 'from-yellow-600 to-amber-600',
       skills: [
         'Hadoop', 'MapReduce', 'Spark', 'Kafka', 'Snowflake', 'BigQuery',
-        'Elasticsearch', 'Redis', 'Prefect', 'DBT', 'Hive', 'Pentaho'
+        'Elasticsearch', 'Redis', 'Prefect', 'DBT', 'Hive', 'Apache Airflow', 'DynamoDB', 'Redshift'
       ]
     },
     {
@@ -58,8 +58,8 @@ const App = () => {
       icon: TrendingUp,
       color: 'from-amber-600 to-orange-600',
       skills: [
-        'Datadog', 'InfluxDB', 'Zenoss', 'Real-time Analytics',
-        'Performance Tuning', 'Observability Engineering', 'Data Visualization'
+        'Datadog', 'InfluxDB', 'Zenoss', 'Grafana', 'Grafana Cloud', 'Vector',
+        'Real-time Analytics', 'Performance Tuning', 'Observability Engineering', 'Data Visualization'
       ]
     },
     {
@@ -91,17 +91,32 @@ const App = () => {
       // Update active section based on scroll position
       const sections = ['hero', 'skills', 'experience', 'education', 'contact'];
       const scrollPosition = window.scrollY + 200;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Find the section that contains the current scroll position
+      let activeSection = 'hero'; // default
       
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
+          const { offsetTop } = element;
+          if (scrollPosition >= offsetTop) {
+            activeSection = section;
           }
         }
       }
+      
+      // Special case: if we're very close to the bottom and contact section exists, show contact
+      const contactElement = document.getElementById('contact');
+      if (contactElement && scrollPosition + windowHeight >= documentHeight - 50) {
+        const contactTop = contactElement.offsetTop;
+        if (scrollPosition >= contactTop - 300) {
+          activeSection = 'contact';
+        }
+      }
+      
+      setActiveSection(activeSection);
     };
     
     window.addEventListener('mousemove', handleMouseMove);
@@ -136,7 +151,7 @@ const App = () => {
   const experiences = [
     {
       title: 'Senior Staff Machine Learning Software Engineer',
-      company: 'PlayStation',
+      company: 'Sony Interactive Entertainment - PlayStation Studios',
       period: 'August 2024 - Present',
       location: 'Remote',
       type: 'Full-time',
@@ -163,7 +178,7 @@ const App = () => {
       type: 'Founder',
       color: 'from-amber-600 to-orange-600',
       icon: Sparkles,
-      logo: 'https://www.sudosquad.com/favicon.ico',
+      logo: '/sudosquad_logo.png',
       description: 'AI Engineering consulting company focused on helping organizations implement cutting-edge AI solutions.',
       achievements: [
         'Founded AI Engineering consulting company specializing in enterprise AI implementation',
@@ -175,14 +190,14 @@ const App = () => {
       website: 'https://www.sudosquad.com/'
     },
     {
-      title: 'Data Architect',
+      title: 'Data Engineering Architect',
       company: 'Bungie',
       period: 'August 2023 - August 2024',
       location: 'Bellevue, WA',
       type: 'Full-time',
       color: 'from-orange-600 to-red-600',
       icon: Shield,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Architected LLM-powered workflows and AI-driven game development tools for Destiny franchise operations.',
       achievements: [
         'Architected and implemented LLM-powered LiveOps support workflows and ETL pipelines for analytics engineering teams',
@@ -195,14 +210,14 @@ const App = () => {
       technologies: ['LLM Workflows', 'ETL Pipelines', 'AI Automation', 'Game Development Tools', 'Player Support Systems', 'Private Model Endpoints']
     },
     {
-      title: 'Data Engineering Manager',
+      title: 'Data Architect & Data Engineering Manager',
       company: 'ProbablyMonsters',
       period: 'June 2018 - August 2023',
       location: 'Bellevue, WA',
       type: 'Management',
       color: 'from-orange-600 to-yellow-700',
       icon: Building,
-      logo: 'https://media.licdn.com/dms/image/v2/C560BAQGHCwfXJv9O5Q/company-logo_200_200/company-logo_200_200/0/1631358959778?e=2147483647&v=beta&t=YV6-mhD4p7BzLYrvyXuYtb-OFR9DFcLOdMH1d8iA8JA',
+      logo: '/pm_logo.png',
       description: 'Established and managed Data Insights team, architecting game-agnostic cloud-based analytics systems.',
       achievements: [
         'Established and managed the Data Insights team from inception, defining vision, goals, and engagement models',
@@ -221,7 +236,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-yellow-700 to-amber-700',
       icon: Target,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Led data platform strategy and managed production infrastructure for Destiny franchise.',
       achievements: [
         'Led long-term roadmap and prioritization for Data Platforms Team supporting scalable data infrastructure for Destiny franchise',
@@ -240,7 +255,7 @@ const App = () => {
       type: 'Operations',
       color: 'from-yellow-600 to-orange-600',
       icon: Settings,
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Bungie-Logo.png',
+      logo: '/bungie_logo.png',
       description: 'Led 24/7 operations center monitoring all infrastructure supporting Destiny games.',
       achievements: [
         'Led 24/7 Destiny Operations Center monitoring all data center infrastructure supporting Destiny games',
@@ -259,7 +274,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-amber-700 to-orange-700',
       icon: Database,
-      logo: 'https://www.lawlogix.com/wp-content/uploads/2016/04/lawlogix-logo.png',
+      logo: '/lawlogix_logo.png',
       description: 'Engineered data migration solutions and enterprise integrations.',
       achievements: [
         'Engineered robust data migration solutions for transforming client data to LawLogix Guardian platform',
@@ -277,7 +292,7 @@ const App = () => {
       type: 'Full-time',
       color: 'from-orange-700 to-red-700',
       icon: Cloud,
-      logo: 'https://logos-world.net/wp-content/uploads/2020/09/Cognizant-Logo.png',
+      logo: '/cognizant_logo.png',
       description: 'Developed cloud infrastructure and monitoring systems for high-traffic analytical platforms.',
       achievements: [
         'Developed cloud infrastructure for high-traffic analytical business data using Hadoop, MapReduce, Hive, Pentaho, and AWS',
@@ -294,7 +309,7 @@ const App = () => {
     institution: 'University of Arizona Computer Vision Lab',
     period: '2007 - 2010',
     description: 'Developed dynamic string matching algorithms for presentation slide and speech recognition alignment.',
-    publication: 'Published research: "Improving and aligning speech with presentation slides," International Conference on Pattern Recognition 2010 (ICPR)',
+    publication: '"Improving and aligning speech with presentation slides," International Conference on Pattern Recognition 2010 (ICPR)',
     technologies: ['Computer Vision', 'String Matching Algorithms', 'Speech Recognition', 'Research Publication']
   };
 
@@ -428,7 +443,7 @@ const App = () => {
                 <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>GitHub</span>
               </a>
-              <a href="https://www.linkedin.com/in/michael-thompson-6a42532b/" className="group flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
+              <a href="https://www.linkedin.com/in/mike-thompson-6a42532b/" className="group flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 px-6 py-3 rounded-full transition-all duration-300 hover:scale-110">
                 <Linkedin className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>LinkedIn</span>
               </a>
@@ -612,7 +627,14 @@ const App = () => {
             
             <a href="https://www.sudosquad.com/" className="group">
               <GlassCard className="flex items-center gap-4 hover:scale-105 transition-all duration-300 text-left">
-                <ExternalLink className="w-8 h-8 text-blue-400 group-hover:rotate-12 transition-transform" />
+                <div className="relative">
+                  <img 
+                    src="/sudosquad_logo.png" 
+                    alt="Sudo Squad logo"
+                    className="w-8 h-8 rounded-lg group-hover:scale-110 transition-transform"
+                  />
+                  <ExternalLink className="w-4 h-4 text-blue-400 absolute -top-1 -right-1 opacity-70" />
+                </div>
                 <div>
                   <p className="font-semibold">Consulting</p>
                   <p className="text-gray-300 text-sm">Sudo Squad LLC</p>
