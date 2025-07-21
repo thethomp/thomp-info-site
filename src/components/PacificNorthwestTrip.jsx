@@ -1,14 +1,148 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Clock, Users, Star, Fish, Mountain, Wine, Camera, Palette, TreePine, Bird, Activity, DollarSign, Sun, Phone, AlertCircle, ChevronRight, Heart, Utensils, Car, Plane, X, ExternalLink, Info, Home, Navigation } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Star, Fish, Mountain, Wine, Camera, Palette, TreePine, Bird, Activity, DollarSign, Sun, Phone, AlertCircle, ChevronRight, Heart, Utensils, Car, Plane, X, ExternalLink, Info, Home, Navigation, CloudRain, Thermometer, Wind, Eye } from 'lucide-react';
 
 const PacificNorthwestTrip = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [activeLocationTab, setActiveLocationTab] = useState('whidbey');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [weather, setWeather] = useState({
+    whidbey: null,
+    leavenworth: null,
+    loading: true,
+    error: null
+  });
 
   useEffect(() => {
     document.title = 'Pacific Northwest Trip - Thomp Trips';
   }, []);
+
+  // Weather setup - using weather.com links (more reliable than API due to CORS restrictions)
+  useEffect(() => {
+    setWeather({
+      whidbey: {
+        location: 'Whidbey Island, WA',
+        isLink: true,
+        url: 'https://weather.com/weather/tenday/l/Whidbey+Island+Station+WA?canonicalCityId=f61416eaa06978f7007de626e621f166'
+      },
+      leavenworth: {
+        location: 'Leavenworth, WA', 
+        isLink: true,
+        url: 'https://weather.com/weather/tenday/l/Leavenworth+WA?canonicalCityId=62e09e468079d6d26d8056981bfb735c'
+      },
+      loading: false,
+      error: null
+    });
+  }, []);
+
+  // Helper function to convert weather icons to emojis
+  const getWeatherEmoji = (iconCode) => {
+    const iconMap = {
+      '01d': '☀️', '01n': '🌙',
+      '02d': '⛅', '02n': '☁️',
+      '03d': '☁️', '03n': '☁️',
+      '04d': '☁️', '04n': '☁️',
+      '09d': '🌦️', '09n': '🌦️',
+      '10d': '🌧️', '10n': '🌧️',
+      '11d': '⛈️', '11n': '⛈️',
+      '13d': '❄️', '13n': '❄️',
+      '50d': '🌫️', '50n': '🌫️'
+    };
+    return iconMap[iconCode] || '🌤️';
+  };
+
+  // Weather component
+  const WeatherCard = ({ location, data, loading, error }) => {
+    if (loading) {
+      return (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+            <div className="h-6 bg-gray-700 rounded w-1/2 mb-2"></div>
+            <div className="flex space-x-2">
+              <div className="h-4 bg-gray-700 rounded w-1/3"></div>
+              <div className="h-4 bg-gray-700 rounded w-1/3"></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (error || !data) {
+      return (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <h4 className="font-semibold text-white mb-2">{location}</h4>
+          <p className="text-gray-400 text-sm">Weather data unavailable</p>
+        </div>
+      );
+    }
+
+    // Handle weather.com link fallback
+    if (data.isLink) {
+      return (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <h4 className="font-semibold text-blue-400 mb-3">{data.location}</h4>
+          <div className="text-center">
+            <p className="text-gray-300 mb-3">Check current weather conditions</p>
+            <a 
+              href={data.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              <Sun className="w-4 h-4" />
+              View Weather Forecast
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h4 className="font-semibold text-blue-400 mb-3">{data.location}</h4>
+        
+        {/* Current Weather */}
+        <div className="mb-4">
+          <div className="flex items-center mb-3">
+            <span className="text-3xl mr-3">{data.current.icon}</span>
+            <div>
+              <div className="text-2xl font-bold text-white">{data.current.temp}°F</div>
+              <div className="text-gray-300 capitalize">{data.current.condition}</div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-2 text-sm text-gray-300">
+            <div className="flex items-center">
+              <Eye className="w-4 h-4 mr-1" />
+              <span>Humidity: {data.current.humidity}%</span>
+            </div>
+            <div className="flex items-center">
+              <Wind className="w-4 h-4 mr-1" />
+              <span>Wind: {data.current.wind} mph</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3-Day Forecast */}
+        <div>
+          <h5 className="text-sm font-semibold text-gray-400 mb-2">3-Day Forecast</h5>
+          <div className="space-y-2">
+            {data.forecast.map((day, index) => (
+              <div key={index} className="flex items-center justify-between text-sm">
+                <span className="text-gray-300 w-16">{day.day}</span>
+                <span className="text-lg">{day.icon}</span>
+                <span className="text-gray-300 capitalize flex-1 text-center">{day.condition}</span>
+                <span className="text-white font-medium">
+                  {day.high}°/<span className="text-gray-400">{day.low}°</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   // Detailed information for activities
   const activityDetails = {
@@ -437,14 +571,33 @@ const PacificNorthwestTrip = () => {
 
             {/* Weather Info */}
             <section className="bg-gray-800 rounded-lg p-6">
-              <div className="flex items-center mb-3">
+              <div className="flex items-center mb-6">
                 <Sun className="w-8 h-8 text-yellow-400 mr-3" />
-                <h2 className="text-2xl font-semibold text-white">Perfect Summer Weather</h2>
+                <h2 className="text-2xl font-semibold text-white">Live Weather Forecast</h2>
               </div>
-              <p className="text-gray-300">
-                Expect highs of 66-75°F with minimal rain. Long daylight hours (sunrise 5:24am, sunset 9:08pm). 
-                Pack layers for cool evenings and bring sun protection!
-              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <WeatherCard 
+                  location="Whidbey Island" 
+                  data={weather.whidbey} 
+                  loading={weather.loading} 
+                  error={weather.error} 
+                />
+                <WeatherCard 
+                  location="Leavenworth" 
+                  data={weather.leavenworth} 
+                  loading={weather.loading} 
+                  error={weather.error} 
+                />
+              </div>
+              
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="font-semibold text-white mb-2">Summer Trip Tips</h3>
+                <p className="text-gray-300 text-sm">
+                  Pacific Northwest summers feature long daylight hours (sunrise ~5:30am, sunset ~9:00pm). 
+                  Pack layers for temperature swings and always bring rain gear just in case!
+                </p>
+              </div>
             </section>
 
             {/* Highlights */}
