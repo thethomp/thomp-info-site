@@ -16,7 +16,7 @@ const TripsLanding = () => {
       groupSize: '7 family members',
       link: '/trips/pacific-northwest-family-adventure',
       icon: Mountain,
-      image: null // Will show placeholder
+      image: '/pnw-trip.png'
     }
     // Add more trips here as needed
   ];
