@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Github, Linkedin, MapPin, Calendar, Users, Code, Brain, Zap, ChevronDown, ExternalLink, Sparkles, Cpu, Database, Cloud, Bot, Building, Award, Target, TrendingUp, Shield, Layers, Globe, Server, GitBranch, BookOpen, Star, Play, Settings, MonitorSpeaker } from 'lucide-react';
 
+// Import trips components
+import TripsLanding from './components/TripsLanding';
+import PacificNorthwestTrip from './components/PacificNorthwestTrip';
+
+// Simple router component for trips
+const TripsRouter = () => {
+  const path = window.location.pathname;
+  
+  if (path === '/trips') {
+    return <TripsLanding />;
+  } else if (path === '/trips/pacific-northwest-family-adventure') {
+    return <PacificNorthwestTrip />;
+  }
+  
+  // Default to trips landing for any other /trips/* path
+  return <TripsLanding />;
+};
+
 const App = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -357,6 +375,11 @@ const App = () => {
       }}
     />
   );
+
+  // Check if we're on a trips path and route accordingly
+  if (window.location.pathname.startsWith('/trips')) {
+    return <TripsRouter />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-900 via-yellow-900 to-orange-900 text-white relative overflow-hidden">
