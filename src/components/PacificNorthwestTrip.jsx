@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Users, Star, Fish, Mountain, Wine, Camera, Palette, TreePine, Bird, Activity, DollarSign, Sun, Phone, AlertCircle, ChevronRight, Heart, Utensils, Car, Plane, X, ExternalLink, Info, Home, Navigation } from 'lucide-react';
 
 const PacificNorthwestTrip = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [activeLocationTab, setActiveLocationTab] = useState('whidbey');
   const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    document.title = 'Pacific Northwest Trip - Thomp Trips';
+  }, []);
 
   // Detailed information for activities
   const activityDetails = {
@@ -155,28 +159,28 @@ const PacificNorthwestTrip = () => {
     if (!details) return null;
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
-            <h3 className="text-xl font-semibold">{item}</h3>
-            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded">
+      <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <div className="bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center">
+            <h3 className="text-xl font-semibold text-white">{item}</h3>
+            <button onClick={onClose} className="p-1 hover:bg-gray-700 rounded text-gray-300">
               <X className="w-5 h-5" />
             </button>
           </div>
           
           <div className="p-6 space-y-4">
-            <p className="text-gray-700 text-lg">{details.description}</p>
+            <p className="text-gray-300 text-lg">{details.description}</p>
             
             <div>
-              <h4 className="font-semibold mb-2 flex items-center">
-                <Info className="w-4 h-4 mr-2 text-blue-600" />
+              <h4 className="font-semibold mb-2 flex items-center text-white">
+                <Info className="w-4 h-4 mr-2 text-blue-400" />
                 Details
               </h4>
               <ul className="space-y-1">
                 {details.details.map((detail, idx) => (
                   <li key={idx} className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 ml-1">{detail}</span>
+                    <ChevronRight className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-gray-300 ml-1">{detail}</span>
                   </li>
                 ))}
               </ul>
@@ -184,52 +188,52 @@ const PacificNorthwestTrip = () => {
 
             {details.location && (
               <div>
-                <h4 className="font-semibold mb-1 flex items-center">
-                  <MapPin className="w-4 h-4 mr-2 text-green-600" />
+                <h4 className="font-semibold mb-1 flex items-center text-white">
+                  <MapPin className="w-4 h-4 mr-2 text-green-400" />
                   Location
                 </h4>
-                <p className="text-sm text-gray-700">{details.location}</p>
+                <p className="text-sm text-gray-300">{details.location}</p>
               </div>
             )}
 
             {details.contact && (
               <div>
-                <h4 className="font-semibold mb-1 flex items-center">
-                  <Phone className="w-4 h-4 mr-2 text-purple-600" />
+                <h4 className="font-semibold mb-1 flex items-center text-white">
+                  <Phone className="w-4 h-4 mr-2 text-purple-400" />
                   Contact
                 </h4>
-                <p className="text-sm text-gray-700">{details.contact}</p>
+                <p className="text-sm text-gray-300">{details.contact}</p>
               </div>
             )}
 
             {details.hours && (
               <div>
-                <h4 className="font-semibold mb-1 flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-orange-600" />
+                <h4 className="font-semibold mb-1 flex items-center text-white">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
                   Hours
                 </h4>
-                <p className="text-sm text-gray-700">{details.hours}</p>
+                <p className="text-sm text-gray-300">{details.hours}</p>
               </div>
             )}
 
             {details.guides && (
               <div>
-                <h4 className="font-semibold mb-2">Guide Services</h4>
+                <h4 className="font-semibold mb-2 text-white">Guide Services</h4>
                 <ul className="space-y-1">
                   {details.guides.map((guide, idx) => (
-                    <li key={idx} className="text-sm text-gray-700">{guide}</li>
+                    <li key={idx} className="text-sm text-gray-300">{guide}</li>
                   ))}
                 </ul>
               </div>
             )}
 
             {details.tips && (
-              <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-semibold mb-1 flex items-center">
-                  <Star className="w-4 h-4 mr-2 text-blue-600" />
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h4 className="font-semibold mb-1 flex items-center text-white">
+                  <Star className="w-4 h-4 mr-2 text-yellow-400" />
                   Insider Tips
                 </h4>
-                <p className="text-sm text-gray-700">{details.tips}</p>
+                <p className="text-sm text-gray-300">{details.tips}</p>
               </div>
             )}
           </div>
@@ -239,10 +243,10 @@ const PacificNorthwestTrip = () => {
   };
 
   const ActivityCard = ({ icon, title, items }) => (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-gray-800 rounded-lg shadow-xl p-6 hover:shadow-2xl transition-shadow">
       <div className="flex items-center mb-4">
         {icon}
-        <h3 className="text-xl font-semibold ml-3">{title}</h3>
+        <h3 className="text-xl font-semibold ml-3 text-white">{title}</h3>
       </div>
       <ul className="space-y-2">
         {items.map((item, idx) => {
@@ -251,13 +255,13 @@ const PacificNorthwestTrip = () => {
           
           return (
             <li key={idx} className="flex items-start">
-              <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
               <button
                 onClick={() => hasDetails && setSelectedItem(itemName)}
                 className={`text-sm text-left ml-1 ${
                   hasDetails 
-                    ? 'text-blue-700 hover:text-blue-900 underline cursor-pointer' 
-                    : 'text-gray-700'
+                    ? 'text-blue-400 hover:text-blue-300 underline cursor-pointer' 
+                    : 'text-gray-300'
                 }`}
               >
                 {item}
@@ -355,7 +359,7 @@ const PacificNorthwestTrip = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Detail Modal */}
       {selectedItem && (
         <DetailModal item={selectedItem} onClose={() => setSelectedItem(null)} />
@@ -384,7 +388,7 @@ const PacificNorthwestTrip = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-white shadow-sm sticky top-0 z-10">
+      <div className="bg-gray-800 shadow-lg sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex space-x-8 overflow-x-auto">
             {['overview', 'activities', 'dining', 'details', 'schedule', 'essentials'].map((tab) => (
@@ -393,8 +397,8 @@ const PacificNorthwestTrip = () => {
                 onClick={() => setActiveTab(tab)}
                 className={`py-4 px-2 border-b-2 font-medium text-sm uppercase tracking-wider transition-colors whitespace-nowrap ${
                   activeTab === tab 
-                    ? 'border-blue-500 text-blue-600' 
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? 'border-blue-400 text-blue-400' 
+                    : 'border-transparent text-gray-400 hover:text-gray-200'
                 }`}
               >
                 {tab === 'details' ? 'Trip Details' : tab}
@@ -416,14 +420,14 @@ const PacificNorthwestTrip = () => {
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {fixedSchedule.map((day, idx) => (
-                  <div key={idx} className="bg-white rounded-lg shadow p-4">
+                  <div key={idx} className="bg-gray-800 rounded-lg shadow-lg p-4">
                     <div className="flex items-center mb-2 text-blue-600">
                       {day.icon}
                       <h3 className="font-semibold ml-2">{day.date}</h3>
                     </div>
                     <ul className="space-y-1">
                       {day.events.map((event, i) => (
-                        <li key={i} className="text-sm text-gray-700">{event}</li>
+                        <li key={i} className="text-sm text-gray-300">{event}</li>
                       ))}
                     </ul>
                   </div>
@@ -432,12 +436,12 @@ const PacificNorthwestTrip = () => {
             </section>
 
             {/* Weather Info */}
-            <section className="bg-yellow-50 rounded-lg p-6">
+            <section className="bg-gray-800 rounded-lg p-6">
               <div className="flex items-center mb-3">
-                <Sun className="w-8 h-8 text-yellow-600 mr-3" />
-                <h2 className="text-2xl font-semibold">Perfect Summer Weather</h2>
+                <Sun className="w-8 h-8 text-yellow-400 mr-3" />
+                <h2 className="text-2xl font-semibold text-white">Perfect Summer Weather</h2>
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-300">
                 Expect highs of 66-75°F with minimal rain. Long daylight hours (sunrise 5:24am, sunset 9:08pm). 
                 Pack layers for cool evenings and bring sun protection!
               </p>
@@ -445,38 +449,38 @@ const PacificNorthwestTrip = () => {
 
             {/* Highlights */}
             <section>
-              <h2 className="text-3xl font-bold mb-6">Trip Highlights</h2>
+              <h2 className="text-3xl font-bold mb-6 text-white">Trip Highlights</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <Mountain className="w-12 h-12 mx-auto mb-2 text-green-600" />
-                  <h3 className="font-semibold">Mountain Adventures</h3>
-                  <p className="text-sm text-gray-600 mt-1">Alpine lakes & trails</p>
+                <div className="bg-gray-700 rounded-lg p-4 text-center">
+                  <Mountain className="w-12 h-12 mx-auto mb-2 text-green-400" />
+                  <h3 className="font-semibold text-white">Mountain Adventures</h3>
+                  <p className="text-sm text-gray-300 mt-1">Alpine lakes & trails</p>
                 </div>
-                <div className="bg-blue-50 rounded-lg p-4 text-center">
-                  <Fish className="w-12 h-12 mx-auto mb-2 text-blue-600" />
-                  <h3 className="font-semibold">Fishing Experiences</h3>
-                  <p className="text-sm text-gray-600 mt-1">Charter & fly fishing</p>
+                <div className="bg-gray-700 rounded-lg p-4 text-center">
+                  <Fish className="w-12 h-12 mx-auto mb-2 text-blue-400" />
+                  <h3 className="font-semibold text-white">Fishing Experiences</h3>
+                  <p className="text-sm text-gray-300 mt-1">Charter & fly fishing</p>
                 </div>
-                <div className="bg-purple-50 rounded-lg p-4 text-center">
-                  <Palette className="w-12 h-12 mx-auto mb-2 text-purple-600" />
-                  <h3 className="font-semibold">Arts & Culture</h3>
-                  <p className="text-sm text-gray-600 mt-1">Museums & galleries</p>
+                <div className="bg-gray-700 rounded-lg p-4 text-center">
+                  <Palette className="w-12 h-12 mx-auto mb-2 text-purple-400" />
+                  <h3 className="font-semibold text-white">Arts & Culture</h3>
+                  <p className="text-sm text-gray-300 mt-1">Museums & galleries</p>
                 </div>
-                <div className="bg-pink-50 rounded-lg p-4 text-center">
-                  <TreePine className="w-12 h-12 mx-auto mb-2 text-pink-600" />
-                  <h3 className="font-semibold">Gardens & Nature</h3>
-                  <p className="text-sm text-gray-600 mt-1">53 acres of gardens</p>
+                <div className="bg-gray-700 rounded-lg p-4 text-center">
+                  <TreePine className="w-12 h-12 mx-auto mb-2 text-pink-400" />
+                  <h3 className="font-semibold text-white">Gardens & Nature</h3>
+                  <p className="text-sm text-gray-300 mt-1">53 acres of gardens</p>
                 </div>
               </div>
             </section>
 
             {/* Info Box */}
-            <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-3 flex items-center">
-                <Info className="w-6 h-6 mr-2 text-blue-600" />
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-3 flex items-center text-white">
+                <Info className="w-6 h-6 mr-2 text-blue-400" />
                 Click on Any Activity for Detailed Information
               </h3>
-              <p className="text-gray-700">
+              <p className="text-gray-300">
                 Throughout this guide, blue underlined items can be clicked for complete details including 
                 locations, prices, hours, contact information, and insider tips!
               </p>
@@ -488,13 +492,13 @@ const PacificNorthwestTrip = () => {
           <div>
             {/* Location Toggle */}
             <div className="flex justify-center mb-8">
-              <div className="bg-gray-200 rounded-lg p-1 inline-flex">
+              <div className="bg-gray-700 rounded-lg p-1 inline-flex">
                 <button
                   onClick={() => setActiveLocationTab('whidbey')}
                   className={`px-6 py-2 rounded-md transition-colors ${
                     activeLocationTab === 'whidbey' 
-                      ? 'bg-white text-blue-600 shadow' 
-                      : 'text-gray-600'
+                      ? 'bg-gray-800 text-blue-400 shadow' 
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   Whidbey Island
@@ -503,8 +507,8 @@ const PacificNorthwestTrip = () => {
                   onClick={() => setActiveLocationTab('leavenworth')}
                   className={`px-6 py-2 rounded-md transition-colors ${
                     activeLocationTab === 'leavenworth' 
-                      ? 'bg-white text-blue-600 shadow' 
-                      : 'text-gray-600'
+                      ? 'bg-gray-800 text-blue-400 shadow' 
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   Leavenworth
@@ -566,32 +570,32 @@ const PacificNorthwestTrip = () => {
 
             {/* Anytime Activities */}
             <section className="mt-8">
-              <h3 className="text-2xl font-semibold mb-4">Anytime Activities (Both Locations)</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-white">Anytime Activities (Both Locations)</h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-white rounded-lg shadow p-4">
-                  <h4 className="font-semibold mb-2 flex items-center">
-                    <Activity className="w-5 h-5 mr-2 text-orange-600" />
+                <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                  <h4 className="font-semibold mb-2 flex items-center text-white">
+                    <Activity className="w-5 h-5 mr-2 text-orange-400" />
                     Pickleball
                   </h4>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-300">
                     Oak Harbor Park (4 courts) & Osborn Elementary in Leavenworth
                   </p>
                 </div>
-                <div className="bg-white rounded-lg shadow p-4">
-                  <h4 className="font-semibold mb-2 flex items-center">
-                    <Heart className="w-5 h-5 mr-2 text-red-600" />
+                <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                  <h4 className="font-semibold mb-2 flex items-center text-white">
+                    <Heart className="w-5 h-5 mr-2 text-red-400" />
                     Indoor Fun
                   </h4>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-300">
                     Board games, cards, puzzles, movie nights, cooking together
                   </p>
                 </div>
-                <div className="bg-white rounded-lg shadow p-4">
-                  <h4 className="font-semibold mb-2 flex items-center">
-                    <Star className="w-5 h-5 mr-2 text-yellow-600" />
+                <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                  <h4 className="font-semibold mb-2 flex items-center text-white">
+                    <Star className="w-5 h-5 mr-2 text-yellow-400" />
                     Evening Activities
                   </h4>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-300">
                     Sunset watching (9pm!), stargazing, happy hour at the Airbnb
                   </p>
                 </div>
@@ -603,26 +607,26 @@ const PacificNorthwestTrip = () => {
         {activeTab === 'dining' && (
           <div className="space-y-8">
             <section>
-              <h2 className="text-3xl font-bold mb-6 flex items-center">
-                <Utensils className="w-8 h-8 mr-3 text-orange-600" />
+              <h2 className="text-3xl font-bold mb-6 flex items-center text-white">
+                <Utensils className="w-8 h-8 mr-3 text-orange-400" />
                 Restaurant Guide
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-2xl font-semibold mb-4 text-blue-600">Whidbey Island</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-blue-400">Whidbey Island</h3>
                   <div className="space-y-4">
-                    <div className="bg-white rounded-lg shadow p-4">
-                      <h4 className="font-semibold text-lg mb-2">Casual Favorites</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li className="border-b pb-1">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                      <h4 className="font-semibold text-lg mb-2 text-white">Casual Favorites</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Island Cafe</strong> - 1542 NE 7th Ave
                           <br />All-day breakfast, comfort food, local favorite
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>The Mill at The Kasteel</strong>
                           <br />Mexican-American fusion, homemade tortillas
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Chris' Bakery</strong>
                           <br />Since 1943, fresh pastries, must-try donuts
                         </li>
@@ -632,14 +636,14 @@ const PacificNorthwestTrip = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-4">
-                      <h4 className="font-semibold text-lg mb-2">Special Occasions</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li className="border-b pb-1">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                      <h4 className="font-semibold text-lg mb-2 text-white">Special Occasions</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Inn at Langley</strong> - 400 1st St, Langley
                           <br />Prix fixe menu, $95-125pp, reserve 2-3 weeks ahead
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Frasers Gourmet Hideaway</strong>
                           <br />Oak Harbor's premier, weekend reservations recommended
                         </li>
@@ -652,12 +656,12 @@ const PacificNorthwestTrip = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold mb-4 text-green-600">Leavenworth</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-green-400">Leavenworth</h3>
                   <div className="space-y-4">
-                    <div className="bg-white rounded-lg shadow p-4">
-                      <h4 className="font-semibold text-lg mb-2">German Essentials</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li className="border-b pb-1">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                      <h4 className="font-semibold text-lg mb-2 text-white">German Essentials</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li className="border-b border-gray-600 pb-1">
                           <button
                             onClick={() => setSelectedItem('München Haus')}
                             className="text-left text-blue-700 hover:text-blue-900 underline"
@@ -667,11 +671,11 @@ const PacificNorthwestTrip = () => {
                           - 709 Front St
                           <br />Beer garden, no reservations, dog-friendly
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Andreas Keller</strong>
                           <br />Authentic atmosphere, weekend reservations crucial
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Ludwig's</strong>
                           <br />Live polka Saturdays, famous Schweinshax'n
                         </li>
@@ -681,14 +685,14 @@ const PacificNorthwestTrip = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-4">
-                      <h4 className="font-semibold text-lg mb-2">Non-German Options</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li className="border-b pb-1">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-4">
+                      <h4 className="font-semibold text-lg mb-2 text-white">Non-German Options</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>JJ Hills Restaurant</strong>
                           <br />Lodge atmosphere, mountain-view outdoor seating
                         </li>
-                        <li className="border-b pb-1">
+                        <li className="border-b border-gray-600 pb-1">
                           <strong>Fresh Burger Cafe</strong>
                           <br />Gourmet burgers, vegetarian options
                         </li>
@@ -709,23 +713,23 @@ const PacificNorthwestTrip = () => {
           <div className="space-y-8">
             {/* Accommodations */}
             <section>
-              <h2 className="text-3xl font-bold mb-6 flex items-center">
-                <Home className="w-8 h-8 mr-3 text-blue-600" />
+              <h2 className="text-3xl font-bold mb-6 flex items-center text-white">
+                <Home className="w-8 h-8 mr-3 text-blue-400" />
                 Accommodations
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-xl font-semibold mb-3 text-blue-600">Oak Harbor</h3>
-                  <div className="space-y-2 text-sm">
+                <div className="bg-gray-800 rounded-lg shadow-xl p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-blue-400">Oak Harbor</h3>
+                  <div className="space-y-2 text-sm text-gray-300">
                     <p><strong>Address:</strong> {accommodations.oakHarbor.address}</p>
                     <p><strong>Check-in:</strong> {accommodations.oakHarbor.checkIn}</p>
                     <p><strong>Check-out:</strong> {accommodations.oakHarbor.checkOut}</p>
                     <p><strong>Notes:</strong> {accommodations.oakHarbor.notes}</p>
                   </div>
                 </div>
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-xl font-semibold mb-3 text-green-600">Leavenworth</h3>
-                  <div className="space-y-2 text-sm">
+                <div className="bg-gray-800 rounded-lg shadow-xl p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-green-400">Leavenworth</h3>
+                  <div className="space-y-2 text-sm text-gray-300">
                     <p><strong>Address:</strong> {accommodations.leavenworth.address}</p>
                     <p><strong>Check-in:</strong> {accommodations.leavenworth.checkIn}</p>
                     <p><strong>Check-out:</strong> {accommodations.leavenworth.checkOut}</p>
@@ -737,21 +741,21 @@ const PacificNorthwestTrip = () => {
 
             {/* Important Contacts */}
             <section>
-              <h2 className="text-3xl font-bold mb-6 flex items-center">
-                <Phone className="w-8 h-8 mr-3 text-purple-600" />
+              <h2 className="text-3xl font-bold mb-6 flex items-center text-white">
+                <Phone className="w-8 h-8 mr-3 text-purple-400" />
                 Important Contacts & Addresses
               </h2>
-              <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="bg-gray-800 rounded-lg shadow-xl p-6">
                 {/* Key Address */}
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                  <h4 className="font-semibold mb-2 flex items-center text-blue-800">
+                <div className="mb-6 p-4 bg-blue-900/50 rounded-lg border-l-4 border-blue-400">
+                  <h4 className="font-semibold mb-2 flex items-center text-blue-300">
                     <Home className="w-5 h-5 mr-2" />
                     Mike & Natalie's House (Stop After Airport)
                   </h4>
-                  <p className="text-sm text-blue-700 font-medium">
+                  <p className="text-sm text-blue-200 font-medium">
                     3110 NE 185th St, Lake Forest Park, WA 98155
                   </p>
-                  <p className="text-xs text-blue-600 mt-1">
+                  <p className="text-xs text-blue-300 mt-1">
                     First stop from Sea-Tac before heading to Oak Harbor
                   </p>
                 </div>
@@ -761,27 +765,27 @@ const PacificNorthwestTrip = () => {
 
             {/* Directions */}
             <section>
-              <h2 className="text-3xl font-bold mb-6 flex items-center">
-                <Navigation className="w-8 h-8 mr-3 text-green-600" />
+              <h2 className="text-3xl font-bold mb-6 flex items-center text-white">
+                <Navigation className="w-8 h-8 mr-3 text-green-400" />
                 Key Directions
               </h2>
-              <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="bg-gray-800 rounded-lg shadow-xl p-6">
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold mb-1">Sea-Tac to Oak Harbor</h4>
-                    <p className="text-sm text-gray-700">
+                    <h4 className="font-semibold mb-1 text-white">Sea-Tac to Oak Harbor</h4>
+                    <p className="text-sm text-gray-300">
                       ~2 hours via I-5 N and WA-20 W. Stop at Deception Pass Bridge for photos!
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Oak Harbor to Leavenworth</h4>
-                    <p className="text-sm text-gray-700">
+                    <h4 className="font-semibold mb-1 text-white">Oak Harbor to Leavenworth</h4>
+                    <p className="text-sm text-gray-300">
                       ~3.5 hours via WA-20 E, I-5 S, and US-2 E. Scenic route through Cascade Mountains.
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Leavenworth to Sea-Tac</h4>
-                    <p className="text-sm text-gray-700">
+                    <h4 className="font-semibold mb-1 text-white">Leavenworth to Sea-Tac</h4>
+                    <p className="text-sm text-gray-300">
                       ~2.5 hours via US-2 W and I-5 S. Leave by 6:30am for 9am flights.
                     </p>
                   </div>
@@ -793,12 +797,12 @@ const PacificNorthwestTrip = () => {
 
         {activeTab === 'schedule' && (
           <div className="space-y-6">
-            <div className="bg-blue-50 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center">
-                <AlertCircle className="w-6 h-6 mr-2 text-blue-600" />
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h2 className="text-2xl font-semibold mb-4 flex items-center text-white">
+                <AlertCircle className="w-6 h-6 mr-2 text-blue-400" />
                 Flexible Itinerary Approach
               </h2>
-              <p className="text-gray-700">
+              <p className="text-gray-300">
                 This trip is designed as a "menu of options" rather than a rigid schedule. 
                 Each morning, choose activities based on weather, energy levels, and what sounds fun!
                 Only the items in the Fixed Schedule are set in stone.
@@ -806,25 +810,25 @@ const PacificNorthwestTrip = () => {
             </div>
             
             <section>
-              <h3 className="text-2xl font-semibold mb-4">Advance Booking Timeline</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-white">Advance Booking Timeline</h3>
               <div className="space-y-4">
-                <div className="bg-orange-50 rounded-lg p-4">
-                  <h4 className="font-semibold flex items-center mb-2">
-                    <Clock className="w-5 h-5 mr-2 text-orange-600" />
+                <div className="bg-gray-800 rounded-lg p-4">
+                  <h4 className="font-semibold flex items-center mb-2 text-white">
+                    <Clock className="w-5 h-5 mr-2 text-orange-400" />
                     2-3 Weeks Before Trip
                   </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                  <ul className="text-sm text-gray-300 space-y-1">
                     <li>• Restaurant reservations for special dinners</li>
                     <li>• Fly fishing guide bookings</li>
                     <li>• Wine tasting reservations for groups of 6+</li>
                   </ul>
                 </div>
-                <div className="bg-yellow-50 rounded-lg p-4">
-                  <h4 className="font-semibold flex items-center mb-2">
-                    <Phone className="w-5 h-5 mr-2 text-yellow-600" />
+                <div className="bg-gray-800 rounded-lg p-4">
+                  <h4 className="font-semibold flex items-center mb-2 text-white">
+                    <Phone className="w-5 h-5 mr-2 text-yellow-400" />
                     Week Before Trip
                   </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                  <ul className="text-sm text-gray-300 space-y-1">
                     <li>• Confirm all reservations</li>
                     <li>• Check weather forecast</li>
                     <li>• Buy Washington State fishing licenses online</li>
@@ -838,126 +842,126 @@ const PacificNorthwestTrip = () => {
         {activeTab === 'essentials' && (
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Packing List</h2>
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="font-semibold mb-3">Clothing & Gear</h3>
+              <h2 className="text-2xl font-semibold mb-4 text-white">Packing List</h2>
+              <div className="bg-gray-800 rounded-lg shadow-xl p-6">
+                <h3 className="font-semibold mb-3 text-white">Clothing & Gear</h3>
                 <ul className="space-y-2 text-sm mb-4">
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Layers for 66-75°F days, cool evenings</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Layers for 66-75°F days, cool evenings</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Rain jacket (just in case)</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Rain jacket (just in case)</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Comfortable walking shoes</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Comfortable walking shoes</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Hiking boots (for Colchuck Lake)</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Hiking boots (for Colchuck Lake)</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Swimsuit for river activities</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Swimsuit for river activities</span>
                   </li>
                 </ul>
                 
-                <h3 className="font-semibold mb-3">Activity Items</h3>
+                <h3 className="font-semibold mb-3 text-white">Activity Items</h3>
                 <ul className="space-y-2 text-sm mb-4">
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Pickleball paddles & balls</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Pickleball paddles & balls</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Board games & cards</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Board games & cards</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Binoculars for bird/whale watching</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Binoculars for bird/whale watching</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Camera with extra batteries</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Camera with extra batteries</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Day pack for hiking</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Day pack for hiking</span>
                   </li>
                 </ul>
 
-                <h3 className="font-semibold mb-3">Essentials</h3>
+                <h3 className="font-semibold mb-3 text-white">Essentials</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Sun protection (hat, sunscreen, sunglasses)</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Sun protection (hat, sunscreen, sunglasses)</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Blankets for outdoor activities</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Blankets for outdoor activities</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Reusable water bottles</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Reusable water bottles</span>
                   </li>
                   <li className="flex items-start">
-                    <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5" />
-                    <span className="ml-1">Bug spray for hiking</span>
+                    <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5" />
+                    <span className="ml-1 text-gray-300">Bug spray for hiking</span>
                   </li>
                 </ul>
               </div>
             </div>
             
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Budget Guidelines</h2>
-              <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-2xl font-semibold mb-4 text-white">Budget Guidelines</h2>
+              <div className="bg-gray-800 rounded-lg shadow-xl p-6">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Casual Meals</span>
-                    <span className="text-sm text-gray-600">$15-25/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Casual Meals</span>
+                    <span className="text-sm text-gray-300">$15-25/person</span>
                   </div>
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Upscale Dining</span>
-                    <span className="text-sm text-gray-600">$35-60/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Upscale Dining</span>
+                    <span className="text-sm text-gray-300">$35-60/person</span>
                   </div>
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Wine Tasting</span>
-                    <span className="text-sm text-gray-600">$10-25/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Wine Tasting</span>
+                    <span className="text-sm text-gray-300">$10-25/person</span>
                   </div>
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Museums</span>
-                    <span className="text-sm text-gray-600">$5-15/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Museums</span>
+                    <span className="text-sm text-gray-300">$5-15/person</span>
                   </div>
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Garden Admission</span>
-                    <span className="text-sm text-gray-600">$10/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Garden Admission</span>
+                    <span className="text-sm text-gray-300">$10/person</span>
                   </div>
-                  <div className="flex justify-between items-center pb-2 border-b">
-                    <span className="text-sm font-medium">Fly Fishing Guide</span>
-                    <span className="text-sm text-gray-600">$250-500/person</span>
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-600">
+                    <span className="text-sm font-medium text-white">Fly Fishing Guide</span>
+                    <span className="text-sm text-gray-300">$250-500/person</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Parking Pass</span>
-                    <span className="text-sm text-gray-600">$5/day or $30/annual</span>
+                    <span className="text-sm font-medium text-white">Parking Pass</span>
+                    <span className="text-sm text-gray-300">$5/day or $30/annual</span>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-6 bg-green-50 rounded-lg p-4">
+              <div className="mt-6 bg-gray-700 rounded-lg p-4">
                 <div className="flex items-center">
-                  <DollarSign className="w-6 h-6 text-green-600 mr-2" />
-                  <p className="text-sm text-gray-700">
+                  <DollarSign className="w-6 h-6 text-green-400 mr-2" />
+                  <p className="text-sm text-gray-300">
                     <strong>Free Activities:</strong> Beaches, most trails, scenic drives, 
                     historic downtown areas, window shopping, pickleball courts
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 bg-blue-50 rounded-lg p-4">
-                <h3 className="font-semibold mb-2">Passes & Licenses</h3>
-                <ul className="text-sm text-gray-700 space-y-1">
+              <div className="mt-4 bg-gray-700 rounded-lg p-4">
+                <h3 className="font-semibold mb-2 text-white">Passes & Licenses</h3>
+                <ul className="text-sm text-gray-300 space-y-1">
                   <li>• Northwest Forest Pass: $5/day or $30/annual (some trailheads)</li>
                   <li>• WA State Discover Pass: $30/annual (state parks)</li>
                   <li>• WA Fishing License: Buy online at wdfw.wa.gov</li>
@@ -969,7 +973,7 @@ const PacificNorthwestTrip = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-12">
+      <footer className="bg-gray-800 border-t border-gray-700 text-white py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
           <p className="text-lg mb-2">Have an Amazing Pacific Northwest Adventure!</p>
           <p className="text-sm text-gray-400">
