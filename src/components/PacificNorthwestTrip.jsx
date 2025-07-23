@@ -85,6 +85,7 @@ const PacificNorthwestTrip = () => {
     loadMealPlanData();
   }, []);
 
+
   // Weather component
   const WeatherCard = ({ location, data, loading, error }) => {
     if (loading) {
@@ -328,7 +329,7 @@ const PacificNorthwestTrip = () => {
     }
   };
 
-  // Update meal data with debounced save
+  // Update meal data and save immediately
   const updateMeal = async (date, mealType, field, value) => {
     const updatedMealPlan = {
       ...mealPlan,
@@ -344,17 +345,21 @@ const PacificNorthwestTrip = () => {
       }
     };
     
+    // Update state immediately
     setMealPlan(updatedMealPlan);
-    setSaveStatus('saving');
     
-    // Debounced save
-    setTimeout(async () => {
+    // Save in background
+    setSaveStatus('saving');
+    try {
       const success = await saveMealPlan(updatedMealPlan);
       setSaveStatus(success ? 'saved' : 'error');
-    }, 2000);
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
   };
 
-  // Update grocery list
+  // Update grocery list and save immediately
   const updateGroceryList = async (location, newList) => {
     const updatedMealPlan = {
       ...mealPlan,
@@ -364,13 +369,18 @@ const PacificNorthwestTrip = () => {
       }
     };
     
+    // Update state immediately
     setMealPlan(updatedMealPlan);
-    setSaveStatus('saving');
     
-    setTimeout(async () => {
+    // Save in background
+    setSaveStatus('saving');
+    try {
       const success = await saveMealPlan(updatedMealPlan);
       setSaveStatus(success ? 'saved' : 'error');
-    }, 1000);
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
   };
 
   const fixedSchedule = [
@@ -489,16 +499,22 @@ const PacificNorthwestTrip = () => {
   // MealSlot component for individual editable meals
   const MealSlot = ({ date, mealType, mealData, onUpdate }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [editValue, setEditValue] = useState(mealData?.dish || '');
+    const [editValue, setEditValue] = useState('');
 
-    const handleSave = () => {
-      onUpdate(date, mealType, 'dish', editValue);
+    const handleEdit = () => {
+      setEditValue(mealData?.dish || '');
+      setIsEditing(true);
+    };
+
+    const handleSave = async () => {
+      await onUpdate(date, mealType, 'dish', editValue);
       setIsEditing(false);
+      setEditValue('');
     };
 
     const handleCancel = () => {
-      setEditValue(mealData?.dish || '');
       setIsEditing(false);
+      setEditValue('');
     };
 
     const getMealIcon = () => {
@@ -552,7 +568,7 @@ const PacificNorthwestTrip = () => {
           </div>
         ) : (
           <div
-            onClick={() => setIsEditing(true)}
+            onClick={handleEdit}
             className="cursor-pointer text-sm text-gray-300 hover:text-white transition-colors min-h-[60px] flex items-start"
           >
             {mealData?.dish ? (
