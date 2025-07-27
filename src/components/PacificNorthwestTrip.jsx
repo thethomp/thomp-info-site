@@ -1369,9 +1369,9 @@ const PacificNorthwestTrip = () => {
                         <h4 className="text-lg font-semibold mb-4 text-blue-400">Summary by Location</h4>
                         <div className="space-y-4">
                           {['whidbey', 'leavenworth', 'travel'].map(location => {
-                            const locationDays = Object.entries(mealPlan.meals || {}).filter(([_, dayData]) => dayData.location === location);
+                            const locationDays = Object.entries(mealPlan.meals || {}).filter(([, dayData]) => dayData.location === location);
                             const locationLabel = location === 'whidbey' ? 'Whidbey Island' : location === 'leavenworth' ? 'Leavenworth' : 'Travel Days';
-                            const totalMeals = locationDays.reduce((count, [_, dayData]) => {
+                            const totalMeals = locationDays.reduce((count, [, dayData]) => {
                               return count + ['breakfast', 'lunch', 'dinner', 'snacks'].reduce((mealCount, mealType) => {
                                 return mealCount + (dayData[mealType]?.items?.length || 0);
                               }, 0);
