@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, MapPin, Clock, Users, Star, Fish, Mountain, Wine, Camera, Palette, TreePine, Bird, Activity, DollarSign, Sun, Phone, AlertCircle, ChevronRight, Heart, Utensils, Car, Plane, X, ExternalLink, Info, Home, Navigation, CloudRain, Thermometer, Wind, Eye } from 'lucide-react';
 
 const PacificNorthwestTrip = () => {
@@ -11,6 +11,15 @@ const PacificNorthwestTrip = () => {
     loading: true,
     error: null
   });
+  const [mealPlan, setMealPlan] = useState({
+    meals: {},
+    groceryLists: { whidbey: [], leavenworth: [] },
+    mealSuggestions: {},
+    categories: {},
+    loading: true,
+    error: null
+  });
+  const [saveStatus, setSaveStatus] = useState('saved'); // 'saving', 'saved', 'error'
 
   useEffect(() => {
     document.title = 'Pacific Northwest Trip - Thomp Trips';
@@ -32,6 +41,37 @@ const PacificNorthwestTrip = () => {
       loading: false,
       error: null
     });
+  }, []);
+
+  // Load meal plan data on component mount
+  useEffect(() => {
+    const loadMealPlanData = async () => {
+      try {
+        const data = await loadMealPlan();
+        if (data) {
+          setMealPlan({
+            ...data,
+            loading: false,
+            error: null
+          });
+        } else {
+          setMealPlan(prev => ({
+            ...prev,
+            loading: false,
+            error: 'Failed to load meal plan data'
+          }));
+        }
+      } catch (error) {
+        console.error('Error loading meal plan:', error);
+        setMealPlan(prev => ({
+          ...prev,
+          loading: false,
+          error: 'Failed to load meal plan data'
+        }));
+      }
+    };
+    
+    loadMealPlanData();
   }, []);
 
 
@@ -248,6 +288,128 @@ const PacificNorthwestTrip = () => {
     }
   };
 
+  // Meal planning data service functions
+  const loadMealPlan = async () => {
+    try {
+      // Add cache-busting parameter to force fresh load
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/data/pnw-meal-plan.json?v=${timestamp}`);
+      if (!response.ok) {
+        throw new Error('Failed to load meal plan');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error loading meal plan:', error);
+      return null;
+    }
+  };
+
+  const saveMealPlan = async (mealPlanData) => {
+    try {
+      // In a real implementation, this would POST to a server endpoint
+      // For now, we'll store in localStorage as fallback
+      const dataToSave = {
+        ...mealPlanData,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem('pnw-meal-plan', JSON.stringify(dataToSave));
+      return true;
+    } catch (error) {
+      console.error('Error saving meal plan:', error);
+      return false;
+    }
+  };
+
+  // Add new meal item to a meal slot
+  const addMealItem = async (date, mealType, newItem) => {
+    const currentItems = mealPlan.meals[date]?.[mealType]?.items || [];
+    const updatedItems = [...currentItems, newItem];
+    
+    const updatedMealPlan = {
+      ...mealPlan,
+      meals: {
+        ...mealPlan.meals,
+        [date]: {
+          ...mealPlan.meals[date],
+          [mealType]: {
+            ...mealPlan.meals[date][mealType],
+            items: updatedItems
+          }
+        }
+      }
+    };
+    
+    // Update state immediately
+    setMealPlan(updatedMealPlan);
+    
+    // Save in background
+    setSaveStatus('saving');
+    try {
+      const success = await saveMealPlan(updatedMealPlan);
+      setSaveStatus(success ? 'saved' : 'error');
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
+  };
+
+  // Remove meal item from a meal slot
+  const removeMealItem = async (date, mealType, itemIndex) => {
+    const currentItems = mealPlan.meals[date]?.[mealType]?.items || [];
+    const updatedItems = currentItems.filter((_, index) => index !== itemIndex);
+    
+    const updatedMealPlan = {
+      ...mealPlan,
+      meals: {
+        ...mealPlan.meals,
+        [date]: {
+          ...mealPlan.meals[date],
+          [mealType]: {
+            ...mealPlan.meals[date][mealType],
+            items: updatedItems
+          }
+        }
+      }
+    };
+    
+    // Update state immediately
+    setMealPlan(updatedMealPlan);
+    
+    // Save in background
+    setSaveStatus('saving');
+    try {
+      const success = await saveMealPlan(updatedMealPlan);
+      setSaveStatus(success ? 'saved' : 'error');
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
+  };
+
+  // Update grocery list and save immediately
+  const updateGroceryList = async (location, newList) => {
+    const updatedMealPlan = {
+      ...mealPlan,
+      groceryLists: {
+        ...mealPlan.groceryLists,
+        [location]: newList
+      }
+    };
+    
+    // Update state immediately
+    setMealPlan(updatedMealPlan);
+    
+    // Save in background
+    setSaveStatus('saving');
+    try {
+      const success = await saveMealPlan(updatedMealPlan);
+      setSaveStatus(success ? 'saved' : 'error');
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
+  };
+
   const fixedSchedule = [
     { date: 'Saturday, July 26', icon: <Plane className="w-5 h-5" />, events: ['Morning: Pick up at Sea-Tac (~9am)', 'From Airport: Head to home in Lake Forest Park', 'Afternoon: Check into Oak Harbor Airbnb'] },
     { date: 'Monday, July 28', icon: <Fish className="w-5 h-5" />, events: ['6:00 AM: Fishing Charter (already booked)'] },
@@ -356,6 +518,254 @@ const PacificNorthwestTrip = () => {
               </div>
             )}
           </div>
+        </div>
+      </div>
+    );
+  };
+
+  // MealSlot component for individual editable meals with item lists
+  const MealSlot = ({ date, mealType, mealData, onAddItem, onRemoveItem }) => {
+    const [isAdding, setIsAdding] = useState(false);
+    const [newItemText, setNewItemText] = useState('');
+    const inputRef = useRef(null);
+
+    const handleAddItem = async () => {
+      if (newItemText.trim()) {
+        await onAddItem(date, mealType, newItemText.trim());
+        setNewItemText('');
+        // Keep isAdding true and refocus input for next item
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
+    };
+
+    const handleKeyPress = async (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        await handleAddItem();
+        // Input stays focused and ready for next item
+      }
+      if (e.key === 'Escape') {
+        setNewItemText('');
+        setIsAdding(false);
+      }
+    };
+
+    const handleCancel = () => {
+      setNewItemText('');
+      setIsAdding(false);
+    };
+
+    const getMealIcon = () => {
+      switch (mealType) {
+        case 'breakfast': return '🌅';
+        case 'lunch': return '☀️';
+        case 'dinner': return '🌙';
+        case 'snacks': return '🍎';
+        default: return '🍽️';
+      }
+    };
+
+    const items = mealData?.items || [];
+
+    return (
+      <div className="bg-gray-700 rounded-lg p-3 min-h-[120px]">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-medium text-white capitalize flex items-center">
+            <span className="mr-2">{getMealIcon()}</span>
+            {mealType}
+          </h4>
+          {mealData?.assignedTo && (
+            <span className="text-xs text-blue-400 bg-blue-900/30 px-2 py-1 rounded">
+              {mealData.assignedTo}
+            </span>
+          )}
+        </div>
+        
+        {/* Display existing items */}
+        <div className="space-y-2 mb-3">
+          {items.map((item, index) => (
+            <div key={index} className="flex items-center justify-between bg-gray-600 rounded px-2 py-1">
+              <span className="text-sm text-gray-200 flex-1">{item}</span>
+              <button
+                onClick={() => onRemoveItem(date, mealType, index)}
+                className="text-red-400 hover:text-red-300 text-xs ml-2"
+                title="Remove item"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Add new item section */}
+        {isAdding ? (
+          <div className="space-y-2">
+            <input
+              ref={inputRef}
+              type="text"
+              value={newItemText}
+              onChange={(e) => setNewItemText(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type meal item, press Enter to add more..."
+              className="w-full bg-gray-600 text-white text-sm rounded px-2 py-1"
+              autoFocus
+            />
+            <div className="flex gap-1">
+              <button
+                onClick={handleAddItem}
+                className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 rounded"
+              >
+                Add
+              </button>
+              <button
+                onClick={handleCancel}
+                className="bg-gray-600 hover:bg-gray-700 text-white text-xs px-2 py-1 rounded"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsAdding(true)}
+            className="w-full text-left text-sm text-gray-400 hover:text-white transition-colors py-2 border-2 border-dashed border-gray-600 hover:border-gray-500 rounded"
+          >
+            + Add meal item...
+          </button>
+        )}
+
+        {/* Notes section */}
+        {mealData?.notes && (
+          <div className="mt-2 pt-2 border-t border-gray-600">
+            <p className="text-xs text-gray-400 italic">{mealData.notes}</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // GroceryList component with categorized shopping lists
+  const GroceryList = ({ location, groceryList, categories, onUpdate }) => {
+    const [newItem, setNewItem] = useState({ item: '', category: 'other', quantity: '' });
+
+    const addItem = () => {
+      if (!newItem.item.trim()) return;
+      
+      const newGroceryItem = {
+        id: `${location}-${Date.now()}`,
+        item: newItem.item,
+        category: newItem.category,
+        quantity: newItem.quantity,
+        purchased: false,
+        addedBy: 'user',
+        notes: ''
+      };
+      
+      onUpdate(location, [...groceryList, newGroceryItem]);
+      setNewItem({ item: '', category: 'other', quantity: '' });
+    };
+
+    const togglePurchased = (itemId) => {
+      const updatedList = groceryList.map(item =>
+        item.id === itemId ? { ...item, purchased: !item.purchased } : item
+      );
+      onUpdate(location, updatedList);
+    };
+
+    const removeItem = (itemId) => {
+      const updatedList = groceryList.filter(item => item.id !== itemId);
+      onUpdate(location, updatedList);
+    };
+
+    const groupedItems = groceryList.reduce((acc, item) => {
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+
+    return (
+      <div className="bg-gray-800 rounded-lg p-6">
+        <h3 className="text-xl font-semibold mb-4 text-white capitalize flex items-center">
+          <Utensils className="w-5 h-5 mr-2 text-green-400" />
+          {location} Shopping List
+        </h3>
+        
+        {/* Add new item */}
+        <div className="mb-6 p-4 bg-gray-700 rounded-lg">
+          <h4 className="font-medium mb-3 text-white">Add New Item</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+            <input
+              type="text"
+              placeholder="Item name"
+              value={newItem.item}
+              onChange={(e) => setNewItem({ ...newItem, item: e.target.value })}
+              className="bg-gray-600 text-white text-sm rounded px-3 py-2"
+            />
+            <select
+              value={newItem.category}
+              onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
+              className="bg-gray-600 text-white text-sm rounded px-3 py-2"
+            >
+              {Object.entries(categories).map(([key, label]) => (
+                <option key={key} value={key}>{label}</option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Quantity"
+              value={newItem.quantity}
+              onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+              className="bg-gray-600 text-white text-sm rounded px-3 py-2"
+            />
+          </div>
+          <button
+            onClick={addItem}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded"
+          >
+            Add Item
+          </button>
+        </div>
+
+        {/* Grocery list by category */}
+        <div className="space-y-4">
+          {Object.entries(categories).map(([categoryKey, categoryLabel]) => {
+            const items = groupedItems[categoryKey] || [];
+            if (items.length === 0) return null;
+            
+            return (
+              <div key={categoryKey} className="bg-gray-700 rounded-lg p-4">
+                <h4 className="font-medium mb-3 text-white">{categoryLabel}</h4>
+                <div className="space-y-2">
+                  {items.map(item => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3 flex-1">
+                        <input
+                          type="checkbox"
+                          checked={item.purchased}
+                          onChange={() => togglePurchased(item.id)}
+                          className="rounded bg-gray-600"
+                        />
+                        <span className={`text-sm ${item.purchased ? 'line-through text-gray-400' : 'text-gray-300'}`}>
+                          {item.item}
+                          {item.quantity && (
+                            <span className="text-gray-500 ml-2">({item.quantity})</span>
+                          )}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="text-red-400 hover:text-red-300 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -510,7 +920,7 @@ const PacificNorthwestTrip = () => {
       <div className="bg-gray-800 shadow-lg sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex space-x-8 overflow-x-auto">
-            {['overview', 'activities', 'dining', 'details', 'schedule', 'essentials'].map((tab) => (
+            {['overview', 'activities', 'dining', 'meal-planning', 'details', 'schedule', 'essentials'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -520,7 +930,7 @@ const PacificNorthwestTrip = () => {
                     : 'border-transparent text-gray-400 hover:text-gray-200'
                 }`}
               >
-                {tab === 'details' ? 'Trip Details' : tab}
+                {tab === 'details' ? 'Trip Details' : tab === 'meal-planning' ? 'Meal Planning' : tab}
               </button>
             ))}
           </div>
@@ -844,6 +1254,243 @@ const PacificNorthwestTrip = () => {
                 </div>
               </div>
             </section>
+          </div>
+        )}
+
+        {activeTab === 'meal-planning' && (
+          <div className="space-y-8">
+            {/* Save Status Indicator */}
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold flex items-center text-white">
+                <Utensils className="w-8 h-8 mr-3 text-green-400" />
+                Family Meal Planning
+              </h2>
+              <div className="flex items-center space-x-2">
+                {saveStatus === 'saving' && (
+                  <span className="text-yellow-400 text-sm">Saving...</span>
+                )}
+                {saveStatus === 'saved' && (
+                  <span className="text-green-400 text-sm">✓ Saved</span>
+                )}
+                {saveStatus === 'error' && (
+                  <span className="text-red-400 text-sm">⚠ Save Error</span>
+                )}
+              </div>
+            </div>
+
+            {mealPlan.loading ? (
+              <div className="bg-gray-800 rounded-lg p-8 text-center">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-700 rounded w-1/2 mx-auto mb-4"></div>
+                  <div className="h-8 bg-gray-700 rounded w-1/3 mx-auto"></div>
+                </div>
+                <p className="text-gray-400 mt-4">Loading meal plan...</p>
+              </div>
+            ) : mealPlan.error ? (
+              <div className="bg-gray-800 rounded-lg p-8 text-center">
+                <p className="text-red-400 mb-4">Error loading meal plan</p>
+                <p className="text-gray-400 text-sm">Using local storage data if available</p>
+              </div>
+            ) : (
+              <>
+                {/* Daily Meal Planning Grid */}
+                <section>
+                  <h3 className="text-2xl font-semibold mb-6 text-white">Daily Meal Plan</h3>
+                  <div className="space-y-6">
+                    {Object.entries(mealPlan.meals || {}).map(([date, dayData]) => {
+                      // Parse date as local time to avoid timezone issues
+                      const [year, month, day] = date.split('-').map(Number);
+                      const dateObj = new Date(year, month - 1, day); // month is 0-indexed
+                      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+                      const monthDay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      
+                      
+                      return (
+                        <div key={date} className="bg-gray-800 rounded-lg p-6">
+                          <div className="flex items-center mb-4">
+                            <Calendar className="w-5 h-5 mr-2 text-blue-400" />
+                            <h4 className="text-lg font-semibold text-white">
+                              {dayName}, {monthDay}
+                            </h4>
+                            <span className={`ml-3 px-2 py-1 text-xs rounded ${
+                              dayData.location === 'whidbey' ? 'bg-blue-900/50 text-blue-300' :
+                              dayData.location === 'leavenworth' ? 'bg-green-900/50 text-green-300' :
+                              'bg-purple-900/50 text-purple-300'
+                            }`}>
+                              {dayData.location === 'whidbey' ? 'Whidbey Island' :
+                               dayData.location === 'leavenworth' ? 'Leavenworth' : 'Travel Day'}
+                            </span>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {['breakfast', 'lunch', 'dinner', 'snacks'].map(mealType => (
+                              <MealSlot
+                                key={mealType}
+                                date={date}
+                                mealType={mealType}
+                                mealData={dayData[mealType]}
+                                onAddItem={addMealItem}
+                                onRemoveItem={removeMealItem}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+
+                {/* Grocery Shopping Lists */}
+                <section>
+                  <h3 className="text-2xl font-semibold mb-6 text-white">Grocery Shopping Lists</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <GroceryList
+                      location="whidbey"
+                      groceryList={mealPlan.groceryLists?.whidbey || []}
+                      categories={mealPlan.categories || {}}
+                      onUpdate={updateGroceryList}
+                    />
+                    <GroceryList
+                      location="leavenworth"
+                      groceryList={mealPlan.groceryLists?.leavenworth || []}
+                      categories={mealPlan.categories || {}}
+                      onUpdate={updateGroceryList}
+                    />
+                  </div>
+                </section>
+
+                {/* Meal Summary Overview */}
+                <section>
+                  <h3 className="text-2xl font-semibold mb-6 text-white">Meal Plan Summary</h3>
+                  <div className="bg-gray-800 rounded-lg p-6">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                      {/* Summary by Location */}
+                      <div>
+                        <h4 className="text-lg font-semibold mb-4 text-blue-400">Summary by Location</h4>
+                        <div className="space-y-4">
+                          {['whidbey', 'leavenworth', 'travel'].map(location => {
+                            const locationDays = Object.entries(mealPlan.meals || {}).filter(([, dayData]) => dayData.location === location);
+                            const locationLabel = location === 'whidbey' ? 'Whidbey Island' : location === 'leavenworth' ? 'Leavenworth' : 'Travel Days';
+                            const totalMeals = locationDays.reduce((count, [, dayData]) => {
+                              return count + ['breakfast', 'lunch', 'dinner', 'snacks'].reduce((mealCount, mealType) => {
+                                return mealCount + (dayData[mealType]?.items?.length || 0);
+                              }, 0);
+                            }, 0);
+
+                            return (
+                              <div key={location} className="bg-gray-700 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h5 className="font-medium text-white">{locationLabel}</h5>
+                                  <span className="text-sm text-gray-400">{locationDays.length} days, {totalMeals} items planned</span>
+                                </div>
+                                {locationDays.length > 0 && (
+                                  <div className="text-sm text-gray-300">
+                                    {locationDays.map(([date, dayData]) => {
+                                      const dateObj = new Date(date.split('-').map(Number)[0], date.split('-').map(Number)[1] - 1, date.split('-').map(Number)[2]);
+                                      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                                      const dayMeals = ['breakfast', 'lunch', 'dinner', 'snacks'].flatMap(mealType => 
+                                        (dayData[mealType]?.items || []).map(item => `${mealType}: ${item}`)
+                                      );
+                                      
+                                      return dayMeals.length > 0 ? (
+                                        <div key={date} className="mb-2">
+                                          <span className="font-medium text-gray-200">{dayName}:</span>
+                                          <ul className="ml-3 mt-1">
+                                            {dayMeals.map((meal, idx) => (
+                                              <li key={idx} className="text-xs text-gray-400">• {meal}</li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Summary by Meal Type */}
+                      <div>
+                        <h4 className="text-lg font-semibold mb-4 text-green-400">Summary by Meal Type</h4>
+                        <div className="space-y-4">
+                          {['breakfast', 'lunch', 'dinner', 'snacks'].map(mealType => {
+                            const allMealsOfType = Object.entries(mealPlan.meals || {}).flatMap(([date, dayData]) => 
+                              (dayData[mealType]?.items || []).map(item => ({ date, item, location: dayData.location }))
+                            );
+
+                            return (
+                              <div key={mealType} className="bg-gray-700 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h5 className="font-medium text-white capitalize flex items-center">
+                                    <span className="mr-2">
+                                      {mealType === 'breakfast' ? '🌅' : mealType === 'lunch' ? '☀️' : mealType === 'dinner' ? '🌙' : '🍎'}
+                                    </span>
+                                    {mealType}
+                                  </h5>
+                                  <span className="text-sm text-gray-400">{allMealsOfType.length} items planned</span>
+                                </div>
+                                {allMealsOfType.length > 0 ? (
+                                  <div className="space-y-1">
+                                    {allMealsOfType.map(({ date, item, location }, idx) => {
+                                      const dateObj = new Date(date.split('-').map(Number)[0], date.split('-').map(Number)[1] - 1, date.split('-').map(Number)[2]);
+                                      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                                      const locationBadge = location === 'whidbey' ? 'W' : location === 'leavenworth' ? 'L' : 'T';
+                                      const badgeColor = location === 'whidbey' ? 'text-blue-400' : location === 'leavenworth' ? 'text-green-400' : 'text-purple-400';
+                                      
+                                      return (
+                                        <div key={idx} className="flex items-center justify-between text-sm">
+                                          <span className="text-gray-300 flex-1">{item}</span>
+                                          <div className="flex items-center space-x-2 text-xs text-gray-400">
+                                            <span className={`font-bold ${badgeColor}`}>{locationBadge}</span>
+                                            <span>{dayName}</span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-gray-500 italic">No {mealType} items planned yet</p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Meal Planning Tips */}
+                <section className="bg-gray-800 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-4 flex items-center text-white">
+                    <Star className="w-5 h-5 mr-2 text-yellow-400" />
+                    Meal Planning Tips
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+                    <div>
+                      <h4 className="font-medium text-white mb-2">For 7 People Planning:</h4>
+                      <ul className="space-y-1">
+                        <li>• Plan for hearty appetites after outdoor activities</li>
+                        <li>• Consider grab-and-go breakfasts for early mornings (fishing!)</li>
+                        <li>• Pack trail snacks for hiking days</li>
+                        <li>• Plan easy cleanup meals for vacation relaxation</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-white mb-2">Local Ingredients to Try:</h4>
+                      <ul className="space-y-1">
+                        <li>• Fresh Pacific Northwest salmon</li>
+                        <li>• Penn Cove mussels (Whidbey specialty)</li>
+                        <li>• Local berries and seasonal produce</li>
+                        <li>• Washington apples and wine</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+              </>
+            )}
           </div>
         )}
 

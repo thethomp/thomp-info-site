@@ -1,0 +1,156 @@
+{
+  "lastUpdated": "2025-01-23T00:00:00Z",
+  "meals": {
+    "2025-07-26": {
+      "location": "whidbey",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-07-27": {
+      "location": "whidbey",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-07-28": {
+      "location": "whidbey",
+      "breakfast": { "items": ["Early breakfast before fishing charter (6:00 AM)"], "assignedTo": "", "notes": "Quick and portable - fishing starts early!" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-07-29": {
+      "location": "whidbey",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": ["Cousin visit lunch/dinner"], "assignedTo": "", "notes": "Either today or yesterday - flexible" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-07-30": {
+      "location": "travel",
+      "breakfast": { "items": ["Travel day breakfast"], "assignedTo": "", "notes": "Oak Harbor to Leavenworth drive" },
+      "lunch": { "items": ["Road trip lunch"], "assignedTo": "", "notes": "Packed lunch or stop en route" },
+      "dinner": { "items": ["First night in Leavenworth"], "assignedTo": "", "notes": "Arrival dinner - maybe München Haus?" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-07-31": {
+      "location": "leavenworth",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-08-01": {
+      "location": "leavenworth",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-08-02": {
+      "location": "leavenworth",
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "Last night in Leavenworth" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    },
+    "2025-08-03": {
+      "location": "travel",
+      "breakfast": { "items": ["Early departure breakfast"], "assignedTo": "", "notes": "Leave by 5:00am for 9am flights - 2 hour drive to airport" },
+      "lunch": { "items": ["Airport/travel lunch"], "assignedTo": "", "notes": "Pack or buy at airport" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
+    }
+  },
+  "groceryLists": {
+    "whidbey": [
+      {
+        "id": "wh-1",
+        "item": "Coffee & Tea",
+        "category": "pantry",
+        "quantity": "For 7 people, 4 days",
+        "purchased": false,
+        "addedBy": "system",
+        "notes": "Morning essentials"
+      },
+      {
+        "id": "wh-2", 
+        "item": "Milk",
+        "category": "dairy",
+        "quantity": "2-3 gallons",
+        "purchased": false,
+        "addedBy": "system",
+        "notes": "Cereal, coffee, cooking"
+      }
+    ],
+    "leavenworth": [
+      {
+        "id": "lv-1",
+        "item": "Coffee & Tea",
+        "category": "pantry", 
+        "quantity": "For 7 people, 4 days",
+        "purchased": false,
+        "addedBy": "system",
+        "notes": "Morning essentials"
+      },
+      {
+        "id": "lv-2",
+        "item": "Milk", 
+        "category": "dairy",
+        "quantity": "2-3 gallons",
+        "purchased": false,
+        "addedBy": "system",
+        "notes": "Cereal, coffee, cooking"
+      }
+    ]
+  },
+  "mealSuggestions": {
+    "breakfast": [
+      "Pancakes with Pacific Northwest berries",
+      "Overnight oats with local honey",
+      "Breakfast burritos (make-ahead)",
+      "Yogurt parfait with granola",
+      "Avocado toast with eggs",
+      "French toast casserole",
+      "Bagels with cream cheese and lox"
+    ],
+    "lunch": [
+      "Picnic sandwiches for hiking", 
+      "Crab salad with local bread",
+      "Grilled burgers and hot dogs",
+      "Pasta salad with vegetables",
+      "Fish tacos with fresh catch",
+      "Charcuterie and cheese boards",
+      "Soup and sandwich combo"
+    ],
+    "dinner": [
+      "Grilled salmon with vegetables",
+      "Pasta with fresh herbs",
+      "Stir-fry with local vegetables", 
+      "Barbecue chicken and sides",
+      "Seafood paella",
+      "Beef stew (great for cool evenings)",
+      "Pizza night (homemade or takeout)"
+    ],
+    "snacks": [
+      "Fresh fruit and nuts",
+      "Trail mix for hiking",
+      "Cheese and crackers",
+      "Local berries",
+      "Hummus and vegetables",
+      "Granola bars",
+      "Popcorn for movie nights"
+    ]
+  },
+  "categories": {
+    "produce": "Fruits & Vegetables",
+    "meat": "Meat & Seafood", 
+    "dairy": "Dairy & Eggs",
+    "pantry": "Pantry & Dry Goods",
+    "frozen": "Frozen Items",
+    "other": "Other Items"
+  }
+}
