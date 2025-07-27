@@ -3,66 +3,66 @@
   "meals": {
     "2025-07-26": {
       "location": "whidbey",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-07-27": {
       "location": "whidbey",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-07-28": {
       "location": "whidbey",
-      "breakfast": { "dish": "Early breakfast before fishing charter (6:00 AM)", "assignedTo": "", "notes": "Quick and portable - fishing starts early!" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": ["Early breakfast before fishing charter (6:00 AM)"], "assignedTo": "", "notes": "Quick and portable - fishing starts early!" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-07-29": {
       "location": "whidbey",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "Cousin visit lunch/dinner", "assignedTo": "", "notes": "Either today or yesterday - flexible" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": ["Cousin visit lunch/dinner"], "assignedTo": "", "notes": "Either today or yesterday - flexible" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-07-30": {
       "location": "travel",
-      "breakfast": { "dish": "Travel day breakfast", "assignedTo": "", "notes": "Oak Harbor to Leavenworth drive" },
-      "lunch": { "dish": "Road trip lunch", "assignedTo": "", "notes": "Packed lunch or stop en route" },
-      "dinner": { "dish": "First night in Leavenworth", "assignedTo": "", "notes": "Arrival dinner - maybe München Haus?" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": ["Travel day breakfast"], "assignedTo": "", "notes": "Oak Harbor to Leavenworth drive" },
+      "lunch": { "items": ["Road trip lunch"], "assignedTo": "", "notes": "Packed lunch or stop en route" },
+      "dinner": { "items": ["First night in Leavenworth"], "assignedTo": "", "notes": "Arrival dinner - maybe München Haus?" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-07-31": {
       "location": "leavenworth",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-08-01": {
       "location": "leavenworth",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-08-02": {
       "location": "leavenworth",
-      "breakfast": { "dish": "", "assignedTo": "", "notes": "" },
-      "lunch": { "dish": "", "assignedTo": "", "notes": "" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": [], "assignedTo": "", "notes": "" },
+      "lunch": { "items": [], "assignedTo": "", "notes": "" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "Last night in Leavenworth" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     },
     "2025-08-03": {
       "location": "travel",
-      "breakfast": { "dish": "Early departure breakfast", "assignedTo": "", "notes": "Leave by 6:30am for 9am flights" },
-      "lunch": { "dish": "Airport/travel lunch", "assignedTo": "", "notes": "Pack or buy at airport" },
-      "dinner": { "dish": "", "assignedTo": "", "notes": "" },
-      "snacks": { "dish": "", "assignedTo": "", "notes": "" }
+      "breakfast": { "items": ["Early departure breakfast"], "assignedTo": "", "notes": "Leave by 5:00am for 9am flights - 2 hour drive to airport" },
+      "lunch": { "items": ["Airport/travel lunch"], "assignedTo": "", "notes": "Pack or buy at airport" },
+      "dinner": { "items": [], "assignedTo": "", "notes": "" },
+      "snacks": { "items": [], "assignedTo": "", "notes": "" }
     }
   },
   "groceryLists": {

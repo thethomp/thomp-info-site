@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, MapPin, Clock, Users, Star, Fish, Mountain, Wine, Camera, Palette, TreePine, Bird, Activity, DollarSign, Sun, Phone, AlertCircle, ChevronRight, Heart, Utensils, Car, Plane, X, ExternalLink, Info, Home, Navigation, CloudRain, Thermometer, Wind, Eye } from 'lucide-react';
 
 const PacificNorthwestTrip = () => {
@@ -55,22 +55,11 @@ const PacificNorthwestTrip = () => {
             error: null
           });
         } else {
-          // Try loading from localStorage as fallback
-          const localData = localStorage.getItem('pnw-meal-plan');
-          if (localData) {
-            const parsedData = JSON.parse(localData);
-            setMealPlan({
-              ...parsedData,
-              loading: false,
-              error: null
-            });
-          } else {
-            setMealPlan(prev => ({
-              ...prev,
-              loading: false,
-              error: 'Failed to load meal plan data'
-            }));
-          }
+          setMealPlan(prev => ({
+            ...prev,
+            loading: false,
+            error: 'Failed to load meal plan data'
+          }));
         }
       } catch (error) {
         console.error('Error loading meal plan:', error);
@@ -302,7 +291,9 @@ const PacificNorthwestTrip = () => {
   // Meal planning data service functions
   const loadMealPlan = async () => {
     try {
-      const response = await fetch('/data/pnw-meal-plan.json');
+      // Add cache-busting parameter to force fresh load
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/data/pnw-meal-plan.json?v=${timestamp}`);
       if (!response.ok) {
         throw new Error('Failed to load meal plan');
       }
@@ -329,8 +320,11 @@ const PacificNorthwestTrip = () => {
     }
   };
 
-  // Update meal data and save immediately
-  const updateMeal = async (date, mealType, field, value) => {
+  // Add new meal item to a meal slot
+  const addMealItem = async (date, mealType, newItem) => {
+    const currentItems = mealPlan.meals[date]?.[mealType]?.items || [];
+    const updatedItems = [...currentItems, newItem];
+    
     const updatedMealPlan = {
       ...mealPlan,
       meals: {
@@ -339,7 +333,40 @@ const PacificNorthwestTrip = () => {
           ...mealPlan.meals[date],
           [mealType]: {
             ...mealPlan.meals[date][mealType],
-            [field]: value
+            items: updatedItems
+          }
+        }
+      }
+    };
+    
+    // Update state immediately
+    setMealPlan(updatedMealPlan);
+    
+    // Save in background
+    setSaveStatus('saving');
+    try {
+      const success = await saveMealPlan(updatedMealPlan);
+      setSaveStatus(success ? 'saved' : 'error');
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveStatus('error');
+    }
+  };
+
+  // Remove meal item from a meal slot
+  const removeMealItem = async (date, mealType, itemIndex) => {
+    const currentItems = mealPlan.meals[date]?.[mealType]?.items || [];
+    const updatedItems = currentItems.filter((_, index) => index !== itemIndex);
+    
+    const updatedMealPlan = {
+      ...mealPlan,
+      meals: {
+        ...mealPlan.meals,
+        [date]: {
+          ...mealPlan.meals[date],
+          [mealType]: {
+            ...mealPlan.meals[date][mealType],
+            items: updatedItems
           }
         }
       }
@@ -496,25 +523,38 @@ const PacificNorthwestTrip = () => {
     );
   };
 
-  // MealSlot component for individual editable meals
-  const MealSlot = ({ date, mealType, mealData, onUpdate }) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editValue, setEditValue] = useState('');
+  // MealSlot component for individual editable meals with item lists
+  const MealSlot = ({ date, mealType, mealData, onAddItem, onRemoveItem }) => {
+    const [isAdding, setIsAdding] = useState(false);
+    const [newItemText, setNewItemText] = useState('');
+    const inputRef = useRef(null);
 
-    const handleEdit = () => {
-      setEditValue(mealData?.dish || '');
-      setIsEditing(true);
+    const handleAddItem = async () => {
+      if (newItemText.trim()) {
+        await onAddItem(date, mealType, newItemText.trim());
+        setNewItemText('');
+        // Keep isAdding true and refocus input for next item
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
     };
 
-    const handleSave = async () => {
-      await onUpdate(date, mealType, 'dish', editValue);
-      setIsEditing(false);
-      setEditValue('');
+    const handleKeyPress = async (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        await handleAddItem();
+        // Input stays focused and ready for next item
+      }
+      if (e.key === 'Escape') {
+        setNewItemText('');
+        setIsAdding(false);
+      }
     };
 
     const handleCancel = () => {
-      setIsEditing(false);
-      setEditValue('');
+      setNewItemText('');
+      setIsAdding(false);
     };
 
     const getMealIcon = () => {
@@ -526,6 +566,8 @@ const PacificNorthwestTrip = () => {
         default: return '🍽️';
       }
     };
+
+    const items = mealData?.items || [];
 
     return (
       <div className="bg-gray-700 rounded-lg p-3 min-h-[120px]">
@@ -541,46 +583,63 @@ const PacificNorthwestTrip = () => {
           )}
         </div>
         
-        {isEditing ? (
+        {/* Display existing items */}
+        <div className="space-y-2 mb-3">
+          {items.map((item, index) => (
+            <div key={index} className="flex items-center justify-between bg-gray-600 rounded px-2 py-1">
+              <span className="text-sm text-gray-200 flex-1">{item}</span>
+              <button
+                onClick={() => onRemoveItem(date, mealType, index)}
+                className="text-red-400 hover:text-red-300 text-xs ml-2"
+                title="Remove item"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Add new item section */}
+        {isAdding ? (
           <div className="space-y-2">
-            <textarea
-              value={editValue}
-              onChange={(e) => setEditValue(e.target.value)}
-              placeholder="Enter meal details..."
-              className="w-full bg-gray-600 text-white text-sm rounded px-2 py-1 resize-none"
-              rows="3"
+            <input
+              ref={inputRef}
+              type="text"
+              value={newItemText}
+              onChange={(e) => setNewItemText(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type meal item, press Enter to add more..."
+              className="w-full bg-gray-600 text-white text-sm rounded px-2 py-1"
               autoFocus
             />
             <div className="flex gap-1">
               <button
-                onClick={handleSave}
+                onClick={handleAddItem}
                 className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 rounded"
               >
-                Save
+                Add
               </button>
               <button
                 onClick={handleCancel}
                 className="bg-gray-600 hover:bg-gray-700 text-white text-xs px-2 py-1 rounded"
               >
-                Cancel
+                Done
               </button>
             </div>
           </div>
         ) : (
-          <div
-            onClick={handleEdit}
-            className="cursor-pointer text-sm text-gray-300 hover:text-white transition-colors min-h-[60px] flex items-start"
+          <button
+            onClick={() => setIsAdding(true)}
+            className="w-full text-left text-sm text-gray-400 hover:text-white transition-colors py-2 border-2 border-dashed border-gray-600 hover:border-gray-500 rounded"
           >
-            {mealData?.dish ? (
-              <div>
-                <p>{mealData.dish}</p>
-                {mealData?.notes && (
-                  <p className="text-xs text-gray-400 mt-1 italic">{mealData.notes}</p>
-                )}
-              </div>
-            ) : (
-              <span className="text-gray-500 italic">Click to add meal...</span>
-            )}
+            + Add meal item...
+          </button>
+        )}
+
+        {/* Notes section */}
+        {mealData?.notes && (
+          <div className="mt-2 pt-2 border-t border-gray-600">
+            <p className="text-xs text-gray-400 italic">{mealData.notes}</p>
           </div>
         )}
       </div>
@@ -1239,9 +1298,12 @@ const PacificNorthwestTrip = () => {
                   <h3 className="text-2xl font-semibold mb-6 text-white">Daily Meal Plan</h3>
                   <div className="space-y-6">
                     {Object.entries(mealPlan.meals || {}).map(([date, dayData]) => {
-                      const dateObj = new Date(date);
+                      // Parse date as local time to avoid timezone issues
+                      const [year, month, day] = date.split('-').map(Number);
+                      const dateObj = new Date(year, month - 1, day); // month is 0-indexed
                       const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
                       const monthDay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      
                       
                       return (
                         <div key={date} className="bg-gray-800 rounded-lg p-6">
@@ -1267,7 +1329,8 @@ const PacificNorthwestTrip = () => {
                                 date={date}
                                 mealType={mealType}
                                 mealData={dayData[mealType]}
-                                onUpdate={updateMeal}
+                                onAddItem={addMealItem}
+                                onRemoveItem={removeMealItem}
                               />
                             ))}
                           </div>
@@ -1293,6 +1356,109 @@ const PacificNorthwestTrip = () => {
                       categories={mealPlan.categories || {}}
                       onUpdate={updateGroceryList}
                     />
+                  </div>
+                </section>
+
+                {/* Meal Summary Overview */}
+                <section>
+                  <h3 className="text-2xl font-semibold mb-6 text-white">Meal Plan Summary</h3>
+                  <div className="bg-gray-800 rounded-lg p-6">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                      {/* Summary by Location */}
+                      <div>
+                        <h4 className="text-lg font-semibold mb-4 text-blue-400">Summary by Location</h4>
+                        <div className="space-y-4">
+                          {['whidbey', 'leavenworth', 'travel'].map(location => {
+                            const locationDays = Object.entries(mealPlan.meals || {}).filter(([_, dayData]) => dayData.location === location);
+                            const locationLabel = location === 'whidbey' ? 'Whidbey Island' : location === 'leavenworth' ? 'Leavenworth' : 'Travel Days';
+                            const totalMeals = locationDays.reduce((count, [_, dayData]) => {
+                              return count + ['breakfast', 'lunch', 'dinner', 'snacks'].reduce((mealCount, mealType) => {
+                                return mealCount + (dayData[mealType]?.items?.length || 0);
+                              }, 0);
+                            }, 0);
+
+                            return (
+                              <div key={location} className="bg-gray-700 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h5 className="font-medium text-white">{locationLabel}</h5>
+                                  <span className="text-sm text-gray-400">{locationDays.length} days, {totalMeals} items planned</span>
+                                </div>
+                                {locationDays.length > 0 && (
+                                  <div className="text-sm text-gray-300">
+                                    {locationDays.map(([date, dayData]) => {
+                                      const dateObj = new Date(date.split('-').map(Number)[0], date.split('-').map(Number)[1] - 1, date.split('-').map(Number)[2]);
+                                      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                                      const dayMeals = ['breakfast', 'lunch', 'dinner', 'snacks'].flatMap(mealType => 
+                                        (dayData[mealType]?.items || []).map(item => `${mealType}: ${item}`)
+                                      );
+                                      
+                                      return dayMeals.length > 0 ? (
+                                        <div key={date} className="mb-2">
+                                          <span className="font-medium text-gray-200">{dayName}:</span>
+                                          <ul className="ml-3 mt-1">
+                                            {dayMeals.map((meal, idx) => (
+                                              <li key={idx} className="text-xs text-gray-400">• {meal}</li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Summary by Meal Type */}
+                      <div>
+                        <h4 className="text-lg font-semibold mb-4 text-green-400">Summary by Meal Type</h4>
+                        <div className="space-y-4">
+                          {['breakfast', 'lunch', 'dinner', 'snacks'].map(mealType => {
+                            const allMealsOfType = Object.entries(mealPlan.meals || {}).flatMap(([date, dayData]) => 
+                              (dayData[mealType]?.items || []).map(item => ({ date, item, location: dayData.location }))
+                            );
+
+                            return (
+                              <div key={mealType} className="bg-gray-700 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h5 className="font-medium text-white capitalize flex items-center">
+                                    <span className="mr-2">
+                                      {mealType === 'breakfast' ? '🌅' : mealType === 'lunch' ? '☀️' : mealType === 'dinner' ? '🌙' : '🍎'}
+                                    </span>
+                                    {mealType}
+                                  </h5>
+                                  <span className="text-sm text-gray-400">{allMealsOfType.length} items planned</span>
+                                </div>
+                                {allMealsOfType.length > 0 ? (
+                                  <div className="space-y-1">
+                                    {allMealsOfType.map(({ date, item, location }, idx) => {
+                                      const dateObj = new Date(date.split('-').map(Number)[0], date.split('-').map(Number)[1] - 1, date.split('-').map(Number)[2]);
+                                      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                                      const locationBadge = location === 'whidbey' ? 'W' : location === 'leavenworth' ? 'L' : 'T';
+                                      const badgeColor = location === 'whidbey' ? 'text-blue-400' : location === 'leavenworth' ? 'text-green-400' : 'text-purple-400';
+                                      
+                                      return (
+                                        <div key={idx} className="flex items-center justify-between text-sm">
+                                          <span className="text-gray-300 flex-1">{item}</span>
+                                          <div className="flex items-center space-x-2 text-xs text-gray-400">
+                                            <span className={`font-bold ${badgeColor}`}>{locationBadge}</span>
+                                            <span>{dayName}</span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-gray-500 italic">No {mealType} items planned yet</p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
