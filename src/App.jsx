@@ -21,7 +21,6 @@ const TripsRouter = () => {
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('hero');
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [, setIsVisible] = useState({});
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -99,9 +98,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
     
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -137,11 +133,9 @@ const App = () => {
       setActiveSection(activeSection);
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
     
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -366,15 +360,6 @@ const App = () => {
     </div>
   );
 
-  const MouseTracker = () => (
-    <div
-      className="fixed pointer-events-none z-10 w-6 h-6 rounded-full bg-gradient-to-r from-yellow-400 to-amber-400 opacity-60 blur-sm transition-all duration-75"
-      style={{
-        left: mousePosition.x - 12,
-        top: mousePosition.y - 12,
-      }}
-    />
-  );
 
   // Check if we're on a trips path and route accordingly
   if (window.location.pathname.startsWith('/trips')) {
@@ -384,7 +369,6 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-900 via-yellow-900 to-orange-900 text-white relative overflow-hidden">
       <FloatingOrbs />
-      <MouseTracker />
       
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
