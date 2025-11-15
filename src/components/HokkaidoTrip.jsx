@@ -55,7 +55,7 @@ const HokkaidoTrip = () => {
     { id: 'food-onsen', label: 'Food & Onsen', icon: UtensilsCrossed },
     { id: 'ski-planning', label: 'Ski Planning', icon: Mountain },
     { id: 'details', label: 'Trip Details', icon: Info },
-    { id: 'philosophy', label: 'Why This Works', icon: Heart }
+    { id: 'route-options', label: 'Route Options', icon: MapPinned }
   ];
 
   const itineraryDays = [
@@ -508,49 +508,6 @@ const HokkaidoTrip = () => {
         'Hotel confirmations',
         'Rental car confirmation (if driving)'
       ]
-    }
-  ];
-
-  const whyThisWorks = [
-    {
-      principle: 'Perfect Ski Cadence',
-      explanation: 'Two full days at Rusutsu → transfer with bonus ski → one full day at Niseko → rest → optional ski. Avoids burnout while maximizing powder days.',
-      icon: TrendingUp
-    },
-    {
-      principle: 'Resort → Resort → Real Town',
-      explanation: 'Start with all-inclusive resort convenience (Rusutsu), then lively international village (Niseko), finish in authentic Japanese port town (Otaru). Keeps things fresh.',
-      icon: MapPinned
-    },
-    {
-      principle: 'No Brutal Transit Days',
-      explanation: 'Rusutsu to Niseko is 1hr. Niseko to Otaru is 1h40. Both include skiing or sightseeing on transfer days. Zero wasted days.',
-      icon: Train
-    },
-    {
-      principle: 'Avoids "Over-Nisekoing"',
-      explanation: 'Niseko is amazing but can feel crowded and touristy after a few days. Two nights is the sweet spot. Rusutsu offers quieter powder, Otaru offers culture.',
-      icon: Users
-    },
-    {
-      principle: 'Otaru Finish = Charm + Calm + Food',
-      explanation: 'After a week of skiing, you want culture, incredible food, and relaxation. Otaru delivers all three. The canal at night, sushi street, LeTAO desserts - perfect wind-down.',
-      icon: Heart
-    },
-    {
-      principle: 'Early Season Reliability',
-      explanation: 'Mid-December is peak early season. Rusutsu and Niseko have the best early coverage in Hokkaido. Kiroro (accessible from Otaru) has the most snow in all of Japan.',
-      icon: CloudSnow
-    },
-    {
-      principle: 'Flexible Final Days',
-      explanation: 'Dec 19-20 are choose-your-own-adventure. Ski more? Explore Otaru? Day trip to Sapporo? Everyone can customize based on energy levels.',
-      icon: CheckCircle2
-    },
-    {
-      principle: 'Zero Stress Departure',
-      explanation: 'Dec 21 flight at 6pm gives plenty of buffer. Wake up relaxed, have a nice breakfast, leisurely train to airport. No 5am panic.',
-      icon: Sparkles
     }
   ];
 
@@ -1294,99 +1251,229 @@ const HokkaidoTrip = () => {
     </div>
   );
 
-  const renderPhilosophyTab = () => (
+  const renderRouteOptionsTab = () => (
     <div className="space-y-6">
       <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
         <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-          <Heart className="w-6 h-6 text-red-400" />
-          Why This Plan Works
+          <MapPinned className="w-6 h-6 text-cyan-400" />
+          Route Options Considered
         </h2>
         <p className="text-gray-400">
-          The philosophy and thinking behind this itinerary.
+          I looked at two different routes for this Hokkaido ski trip. Here's the breakdown and why I chose Option A.
         </p>
       </div>
 
-      <div className="space-y-4">
-        {whyThisWorks.map((item, index) => {
-          const IconComponent = item.icon;
-          return (
-            <div key={index} className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-lg">
-                  <IconComponent className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-white mb-2">{item.principle}</h3>
-                  <p className="text-gray-300">{item.explanation}</p>
-                </div>
+      {/* Option A - West Hokkaido (Chosen Route) */}
+      <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 rounded-lg p-6 border-2 border-green-600/50">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <CheckCircle2 className="w-8 h-8 text-green-400" />
+              <h3 className="text-2xl font-bold text-white">OPTION A — West Hokkaido Loop</h3>
+            </div>
+            <p className="text-green-300 font-semibold text-lg">Rusutsu → Niseko → Otaru</p>
+            <p className="text-green-400 font-bold mt-2">✓ Recommended Route</p>
+          </div>
+        </div>
+
+        <div className="space-y-4 mt-6">
+          <div className="bg-gray-900/50 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <CloudSnow className="w-6 h-6 text-cyan-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">1. Best early-season snow in Japan</h4>
+                <p className="text-gray-300 text-sm">
+                  This region (Rusutsu / Niseko / Kiroro) gets insanely consistent mid-December snowfall.
+                  Rusutsu + Kiroro especially are known for having the best early coverage in Japan.
+                </p>
               </div>
             </div>
-          );
-        })}
+          </div>
+
+          <div className="bg-gray-900/50 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Mountain className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">2. More "all-inclusive ski experience"</h4>
+                <p className="text-gray-300 text-sm mb-3">We get the full resort vibe:</p>
+                <ul className="space-y-1 text-gray-300 text-sm">
+                  <li>• Ski-in/ski-out</li>
+                  <li>• Onsen in the resort</li>
+                  <li>• Tons of food options</li>
+                  <li>• Zero daily commuting</li>
+                  <li>• Big terrain + great for intermediate skiers</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900/50 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Fish className="w-6 h-6 text-orange-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">3. Otaru gives us the Japan town experience</h4>
+                <p className="text-gray-300 text-sm mb-3">After skiing, we stay in Otaru for 3 nights:</p>
+                <ul className="space-y-1 text-gray-300 text-sm">
+                  <li>• Canal streets</li>
+                  <li>• Incredible seafood + sushi</li>
+                  <li>• Bakeries + coffee shops</li>
+                  <li>• Traditional-feeling winter town</li>
+                  <li>• Option to ski small local mountains if we want</li>
+                </ul>
+                <p className="text-cyan-400 text-sm mt-3 italic">
+                  It's the perfect mix of: resort skiing → iconic Niseko day → real Japanese town
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900/50 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Plane className="w-6 h-6 text-purple-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">4. Easy travel</h4>
+                <p className="text-gray-300 text-sm mb-2">One smooth loop:</p>
+                <p className="text-cyan-400 font-mono text-sm">
+                  Rusutsu → Niseko → Otaru → CTS → Tokyo
+                </p>
+                <p className="text-gray-300 text-sm mt-2">
+                  Minimal hotel switching and no backtracking.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Alternative Considerations */}
-      <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 mt-8">
-        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <AlertCircle className="w-6 h-6 text-yellow-400" />
-          Alternatives Considered
-        </h3>
+      {/* Option B - East/North Hokkaido */}
+      <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <AlertCircle className="w-8 h-8 text-yellow-400" />
+              <h3 className="text-2xl font-bold text-white">OPTION B — East/North Hokkaido</h3>
+            </div>
+            <p className="text-gray-300 font-semibold text-lg">Asahikawa → Furano → Kamui → Tokachidake</p>
+            <p className="text-yellow-400 font-semibold mt-2">Cool, but not ideal for this trip</p>
+          </div>
+        </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
+          <p className="text-white font-semibold text-lg">Why it's cool, but not ideal for this trip:</p>
+
           <div className="bg-gray-900 rounded-lg p-4">
-            <h4 className="text-white font-semibold mb-2">More Niseko time?</h4>
-            <p className="text-gray-300 text-sm">
-              <span className="font-semibold text-red-400">Why not:</span> Niseko is amazing but can feel
-              touristy and crowded. Two nights hits the sweet spot. More time would feel repetitive and
-              you'd miss out on Otaru's charm and Rusutsu's quieter powder.
-            </p>
+            <div className="flex items-start gap-3">
+              <Train className="w-6 h-6 text-gray-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">1. More commuting to ski</h4>
+                <p className="text-gray-300 text-sm">
+                  Asahikawa is a city — you drive 35–70 min each morning to reach mountains.
+                  No ski-in/ski-out vibe.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-gray-900 rounded-lg p-4">
-            <h4 className="text-white font-semibold mb-2">Skip Otaru and stay in Sapporo?</h4>
-            <p className="text-gray-300 text-sm">
-              <span className="font-semibold text-red-400">Why not:</span> Sapporo is a big city with great
-              food but lacks the charm and intimacy of Otaru. The canal, sushi street, and small-town vibe
-              are perfect for winding down after resort life.
-            </p>
+            <div className="flex items-start gap-3">
+              <Mountain className="w-6 h-6 text-gray-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">2. Smaller mountains</h4>
+                <p className="text-gray-300 text-sm">
+                  Still super fun, but more like local hills vs. big resort mountains.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-gray-900 rounded-lg p-4">
-            <h4 className="text-white font-semibold mb-2">More ski days, less rest?</h4>
-            <p className="text-gray-300 text-sm">
-              <span className="font-semibold text-red-400">Why not:</span> Skiing 6-7 days straight leads
-              to burnout and injuries. The flexible days (Otaru Dec 19-20) let people choose their own
-              adventure: ski more, explore culture, or just rest. This pacing is sustainable.
-            </p>
+            <div className="flex items-start gap-3">
+              <Snowflake className="w-6 h-6 text-gray-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">3. Slightly less reliable early-season coverage</h4>
+                <p className="text-gray-300 text-sm">
+                  Snow here is colder and lighter, but some terrain opens later than Rusutsu/Niseko.
+                  Better suited for mid-late season.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-gray-900 rounded-lg p-4">
-            <h4 className="text-white font-semibold mb-2">Fly out earlier on Dec 21?</h4>
+            <div className="flex items-start gap-3">
+              <Hotel className="w-6 h-6 text-gray-400 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-white font-semibold mb-2">4. Only one home base</h4>
+                <p className="text-gray-300 text-sm">
+                  We'd basically stay in one city the whole time and do day-trips outward.
+                  Less variety in scenery and vibe.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-900/30 border border-blue-700/30 rounded-lg p-4 mt-4">
+            <h4 className="text-blue-300 font-semibold mb-3 flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
+              Upsides
+            </h4>
+            <ul className="space-y-1 text-gray-300 text-sm">
+              <li>• Way fewer tourists</li>
+              <li>• Very "real Japan" feel</li>
+              <li>• Amazing food (Asahikawa ramen is legendary)</li>
+              <li>• Onsen day at Tokachidake = magical</li>
+            </ul>
+          </div>
+
+          <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-700/30 rounded-lg p-4 mt-4">
+            <h4 className="text-purple-300 font-semibold mb-2">My take</h4>
             <p className="text-gray-300 text-sm">
-              <span className="font-semibold text-red-400">Why not:</span> Morning flights mean 5am wake-up
-              and rushed departure. The 6pm flight gives time for a relaxed breakfast, leisurely transit,
-              and zero stress. It's vacation until the very end.
+              This is a trip I definitely want us to do — but probably later in the season, when the
+              snowpack is deeper and we have more days to explore.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Final Thoughts */}
+      {/* Final Recommendation */}
       <div className="bg-gradient-to-br from-cyan-900/30 to-blue-900/30 rounded-lg p-6 border border-cyan-700/30">
-        <h3 className="text-cyan-300 font-bold text-xl mb-3">Final Thoughts</h3>
-        <p className="text-gray-300 mb-4">
-          This itinerary balances powder skiing, cultural experiences, incredible food, and relaxation.
-          It's designed to avoid the common mistakes of Japan ski trips: too much Niseko, not enough
-          non-ski activities, rushed transit, and departure-day stress.
+        <h3 className="text-cyan-300 font-bold text-xl mb-3 flex items-center gap-2">
+          <CheckCircle2 className="w-6 h-6" />
+          My Recommendation
+        </h3>
+        <p className="text-white font-semibold text-lg mb-4">
+          Let's do Option A — West Hokkaido for this December trip.
         </p>
-        <p className="text-gray-300">
-          By mid-December, Hokkaido is in full winter mode with reliable snow, but crowds haven't hit peak
-          levels yet. The progression from resort → resort → town keeps things fresh, and the flexible final
-          days let everyone customize based on their energy and interests.
-        </p>
+
+        <div className="space-y-2 mb-4">
+          <p className="text-gray-300">It gives us:</p>
+          <div className="space-y-1.5">
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-300">Best snow for mid-December</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-300">Great skiing without commuting</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-300">Resort convenience + one big Niseko day</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-300">Amazing Japanese town experience in Otaru</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-300">The most variety without extra logistics</span>
+            </div>
+          </div>
+        </div>
+
         <p className="text-cyan-400 font-semibold mt-4 flex items-center gap-2">
           <Snowflake className="w-5 h-5" />
-          This is the Hokkaido trip done right.
+          And then on a future ski trip (maybe next year), we can totally do the Furano / Asahikawa region when the conditions are at peak.
         </p>
       </div>
     </div>
@@ -1406,8 +1493,8 @@ const HokkaidoTrip = () => {
         return renderSkiPlanningTab();
       case 'details':
         return renderDetailsTab();
-      case 'philosophy':
-        return renderPhilosophyTab();
+      case 'route-options':
+        return renderRouteOptionsTab();
       default:
         return renderOverviewTab();
     }
