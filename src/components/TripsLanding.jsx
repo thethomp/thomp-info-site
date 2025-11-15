@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Compass, MapPin, ExternalLink, Mountain } from 'lucide-react';
+import { Compass, MapPin, ExternalLink, Mountain, Snowflake } from 'lucide-react';
 
 const TripsLanding = () => {
   useEffect(() => {
@@ -17,8 +17,18 @@ const TripsLanding = () => {
       link: '/trips/pacific-northwest-family-adventure',
       icon: Mountain,
       image: '/pnw-trip.png'
+    },
+    {
+      title: 'Hokkaido Ski Trip 2025',
+      location: 'Rusutsu, Niseko & Otaru, Japan',
+      description: 'Epic early-season powder skiing in Hokkaido with perfect pacing. Rusutsu resort skiing, legendary Niseko powder, Otaru food & onsen, minimal transit friction.',
+      duration: '9 days',
+      dates: 'Dec 13-21, 2025',
+      groupSize: 'Group trip',
+      link: '/trips/hokkaido-ski-2025',
+      icon: Snowflake,
+      image: '/hokkaido-trip.png'
     }
-    // Add more trips here as needed
   ];
 
 

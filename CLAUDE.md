@@ -1,7 +1,7 @@
 # Claude Development Guidelines for Mike Thompson's Portfolio Site
 
 ## Project Overview
-This is a modern portfolio website built with React, Vite, and Tailwind CSS showcasing Mike Thompson's professional experience as a Senior Staff Machine Learning Software Engineer.
+This is a modern portfolio website built with React, Vite, and Tailwind CSS showcasing Mike Thompson's professional experience as a Senior Staff Machine Learning Software Engineer. The site includes a trips section with detailed travel itineraries and planning guides.
 
 ## Development Commands
 
@@ -19,26 +19,36 @@ This is a modern portfolio website built with React, Vite, and Tailwind CSS show
 ## Architecture & File Structure
 
 ### Key Files
-- `src/App.jsx` - Main portfolio component (contains all content and logic)
+- `src/App.jsx` - Main component with routing for portfolio and trips
+- `src/components/TripsLanding.jsx` - Trip landing page with trip cards
+- `src/components/PacificNorthwestTrip.jsx` - Pacific Northwest trip itinerary (1,770 lines)
+- `src/components/HokkaidoTrip.jsx` - Hokkaido ski trip itinerary (1,480+ lines)
 - `src/index.css` - Global styles and Tailwind imports (keep minimal)
 - `src/App.css` - Component-specific styles (currently minimal, Tailwind preferred)
 - `index.html` - HTML template with SEO meta tags
 - `tailwind.config.js` - Tailwind configuration
 - `postcss.config.js` - PostCSS configuration (uses @tailwindcss/postcss plugin)
+- `public/data/` - JSON data files for trip features (meal planning, etc.)
 
 ### Component Structure
-The entire portfolio is a single React component (`App`) with these main sections:
+**Main Portfolio** (`App.jsx` at `/`):
 - Hero section with animated background
 - Skills section with categorized expertise
-- Experience section with detailed work history  
+- Experience section with detailed work history
 - Education section with research background
 - Contact section with links
+
+**Trips Section** (pathname-based routing):
+- `/trips` - Landing page with trip cards (TripsLanding.jsx)
+- `/trips/pacific-northwest-family-adventure` - PNW trip details
+- `/trips/hokkaido-ski-2025` - Hokkaido ski trip details
 
 ## Styling Guidelines
 
 ### Tailwind CSS Usage
 - **Primary approach**: Use Tailwind utility classes
-- **Color scheme**: Purple/pink/blue gradients with glass-morphism effects
+- **Portfolio color scheme**: Purple/pink/blue gradients with glass-morphism effects
+- **Trips color scheme**: Gray backgrounds (gray-800/gray-900) with accent colors per trip
 - **Responsive**: Mobile-first design with `sm:`, `md:`, `lg:` breakpoints
 - **Animations**: Uses Tailwind's built-in animation classes and custom CSS animations
 
@@ -51,16 +61,28 @@ The entire portfolio is a single React component (`App`) with these main section
 ## Content Management
 
 ### Personal Information
-All content is embedded in the `App.jsx` component in these data structures:
+Portfolio content is embedded in the `App.jsx` component in these data structures:
 - `skillCategories` - Technical skills organized by category
 - `experiences` - Work experience with achievements and technologies
 - `education` - Research and academic background
 - Contact links in hero and contact sections
 
+### Trips Content
+Trip pages follow a monolithic component pattern:
+- Each trip is a single large component (1,000+ lines)
+- Trip data embedded as constants within each component
+- Tab-based navigation for different sections (Overview, Itinerary, Details, etc.)
+- Optional JSON data files for interactive features (meal planning)
+
 ### Adding New Content
-- **New Experience**: Add to the `experiences` array
-- **New Skills**: Add to appropriate category in `skillCategories` 
-- **Updating Info**: Modify the embedded data structures directly
+- **New Experience**: Add to the `experiences` array in App.jsx
+- **New Skills**: Add to appropriate category in `skillCategories` in App.jsx
+- **New Trip**:
+  1. Create new trip component in `src/components/`
+  2. Add trip metadata to `trips` array in TripsLanding.jsx
+  3. Add routing case in TripsRouter component in App.jsx
+  4. Add trip image to `public/` directory
+- **Updating Trip Info**: Modify the embedded data structures in the trip component
 
 ## Development Best Practices
 

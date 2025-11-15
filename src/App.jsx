@@ -4,17 +4,20 @@ import { Mail, Github, Linkedin, MapPin, Calendar, Users, Code, Brain, Zap, Chev
 // Import trips components
 import TripsLanding from './components/TripsLanding';
 import PacificNorthwestTrip from './components/PacificNorthwestTrip';
+import HokkaidoTrip from './components/HokkaidoTrip';
 
 // Simple router component for trips
 const TripsRouter = () => {
   const path = window.location.pathname;
-  
+
   if (path === '/trips') {
     return <TripsLanding />;
   } else if (path === '/trips/pacific-northwest-family-adventure') {
     return <PacificNorthwestTrip />;
+  } else if (path === '/trips/hokkaido-ski-2025') {
+    return <HokkaidoTrip />;
   }
-  
+
   // Default to trips landing for any other /trips/* path
   return <TripsLanding />;
 };
