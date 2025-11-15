@@ -25,6 +25,7 @@ Visit the live portfolio: [Your Domain Here]
 - **Performance Optimized**: Built with Vite for fast development and production builds
 - **SEO Ready**: Proper meta tags and semantic HTML structure
 - **Automated Deployment**: GitHub Actions workflow for seamless VPS deployment
+- **Trip Planning Section**: Detailed trip itineraries with interactive tabs, day-by-day schedules, and comprehensive planning guides
 
 ## Local Development
 
@@ -292,11 +293,16 @@ ls -la /var/www/html/
 thomp-info-site/
 ├── .github/workflows/     # GitHub Actions deployment
 ├── src/
-│   ├── App.jsx           # Main portfolio component
+│   ├── App.jsx           # Main portfolio component with routing
 │   ├── components/       # React components
+│   │   ├── TripsLanding.jsx           # Trip landing page
+│   │   ├── PacificNorthwestTrip.jsx   # PNW trip itinerary
+│   │   └── HokkaidoTrip.jsx           # Hokkaido ski trip itinerary
 │   ├── assets/           # Static assets
 │   └── index.css         # Global styles
-├── public/               # Public assets (images, etc.)
+├── public/               # Public assets (images, trip data)
+│   ├── data/             # JSON data for trips
+│   └── *.png             # Trip images
 ├── dist/                 # Built files (generated)
 ├── CLAUDE.md            # Development guidelines
 ├── DEPLOYMENT.md        # Detailed deployment docs
